@@ -1,0 +1,19 @@
+###
+GET http://localhost:3000/projects
+###
+GET http://localhost:3000/projects/1
+###
+POST http://localhost:3000/projects
+Content-Type: application/json
+
+{
+    "title": "Flowers",
+    "description" : "Flowers Project",
+    "image_name" : "Test",
+    "link" : "test",
+    "status": "true"
+}
+###
+PUT  http://localhost:3000/projects/1
+###
+DELETE  http://localhost:3000/projects/1
