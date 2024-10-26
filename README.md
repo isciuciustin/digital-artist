@@ -1,1 +1,1 @@
-# digital-artist
+# This is a website for a digital artist
