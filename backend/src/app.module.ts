@@ -4,17 +4,18 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+
 @Module({
     imports: [
         ConfigModule.forRoot(),
         TypeOrmModule.forRoot({
             type: 'mysql',
-            host: 'localhost',
-            port: 3306,
+            host: process.env.MYSQL_HOST,
+            port: Number(process.env.MYSQL_PORT),
             driver: {},
-            username: 'root',
-            password: process.env.MYSQL_DATABASE,
-            database: 'digital_artist',
+            username: process.env.MYSQL_USERNAME,
+            password: process.env.MYSQL_PASSWORD,
+            database: process.env.MYSQL_DATABASE,
             synchronize: true,
             entities: []
         }),
