@@ -1,4 +1,6 @@
 import type { MetaFunction } from '@remix-run/node';
+import Navbar from './_user._navbar';
+import { Outlet } from '@remix-run/react';
 
 export const meta: MetaFunction = () => {
     return [
@@ -13,7 +15,8 @@ export const meta: MetaFunction = () => {
 export default function Index() {
     return (
         <div>
-            <h1>Iustin</h1>
+            <Navbar />
+            <Outlet />
         </div>
     );
 }
