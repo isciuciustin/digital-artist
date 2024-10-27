@@ -1,43 +1,26 @@
 export default function Navbar() {
     return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
-            <div className="container-fluid">
+        <nav className="navbar navbar-light bg-light">
+            <div className="container-fluid justify-content-start">
                 <a
-                    className="navbar-brand text-dark"
+                    className="navbar-brand"
                     href="/"
                 >
-                    Navbar
+                    <h1>Digital Artist</h1>
                 </a>
-                <button
-                    className="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavAltMarkup"
-                    aria-controls="navbarNavAltMarkup"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div
-                    className="collapse navbar-collapse"
-                    id="navbarNavAltMarkup"
-                >
-                    <div className="navbar-nav">
-                        <a
-                            className="nav-link active text-dark"
-                            aria-current="page"
-                            href="/about"
-                        >
-                            About
-                        </a>
-                        <a
-                            className="nav-link text-dark"
-                            href="/work"
-                        >
-                            Work
-                        </a>
-                    </div>
+                <div className="ms-5">
+                    <a
+                        className="nav-item text-dark text-decoration-none mx-2"
+                        href="/about"
+                    >
+                        <h2>About</h2>
+                    </a>
+                    <a
+                        className="nav-item text-dark text-decoration-none mx-2"
+                        href="/work"
+                    >
+                        <h2>Work</h2>
+                    </a>
                 </div>
             </div>
         </nav>

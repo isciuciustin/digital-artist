@@ -43,7 +43,6 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export default function Login() {
     const actionData = useActionData<typeof action>();
-    console.log('Action ', actionData);
     return (
         <div className="d-flex justify-content-center">
             <Form
