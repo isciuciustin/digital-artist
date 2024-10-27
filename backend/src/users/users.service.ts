@@ -31,8 +31,6 @@ export class UsersService {
     // }
 
     async read(username: string, password: string) {
-        console.log('USERNAME : ', username);
-        console.log('PASSWORD : ', password);
         return await this.usersRepository.findOne({
             where: { username: username, password: password }
         });

@@ -1,14 +1,13 @@
 import { ActionFunctionArgs } from '@remix-run/node';
-import { Form } from '@remix-run/react';
+import { Form, json, redirect, useActionData } from '@remix-run/react';
 import CryptoJS from 'crypto-js';
 
 export async function action({ request }: ActionFunctionArgs) {
     const formData = await request.formData();
     const username = formData.get('username');
     const password = formData.get('password');
-    console.log('Username  ' + username);
-    console.log('Password  ' + password);
 
+    // HASHING THE PASSWORD
     const hash = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
     const headers = {
         'Content-Type': 'application/json'
@@ -23,11 +22,28 @@ export async function action({ request }: ActionFunctionArgs) {
         body
     });
     const data = await response.json();
-    console.log('RESPONSE DATA ', data);
-    return null;
+    let errors = {
+        password: '',
+        login_error: ''
+    };
+
+    if (String(password).length < 8) {
+        errors['password'] = 'Password should be at least 8 characters';
+    }
+
+    if (data.message == 'LOGIN FAILED') {
+        errors['login_error'] = 'Username or password incorrect!';
+    }
+    if (errors.password || errors.login_error) {
+        return json({ errors });
+    }
+
+    return redirect('/dashboard');
 }
 
 export default function Login() {
+    const actionData = useActionData<typeof action>();
+    console.log('Action ', actionData);
     return (
         <div className="d-flex justify-content-center">
             <Form
@@ -55,6 +71,21 @@ export default function Login() {
                             type="password"
                             className="form-control"
                         />
+                        {actionData?.errors?.password ? (
+                            <div
+                                className="alert alert-danger mt-3"
+                                role="alert"
+                            >
+                                <em>{actionData?.errors.password}</em>
+                            </div>
+                        ) : actionData?.errors?.login_error ? (
+                            <div
+                                className="alert alert-danger mt-3"
+                                role="alert"
+                            >
+                                <em>{actionData?.errors.login_error}</em>
+                            </div>
+                        ) : null}
                     </div>
                 </div>
                 <button className="btn btn-outline-primary">Login</button>
