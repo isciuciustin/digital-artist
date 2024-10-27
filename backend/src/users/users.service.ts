@@ -30,8 +30,12 @@ export class UsersService {
     //     });
     // }
 
-    async read(id: number) {
-        return await this.usersRepository.findOne({ where: { id: id } });
+    async read(username: string, password: string) {
+        console.log('USERNAME : ', username);
+        console.log('PASSWORD : ', password);
+        return await this.usersRepository.findOne({
+            where: { username: username, password: password }
+        });
     }
 
     // async update(id: number, data: Partial<UsersDTO>) {

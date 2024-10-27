@@ -1,5 +1,6 @@
 import { ActionFunctionArgs } from '@remix-run/node';
 import { Form } from '@remix-run/react';
+import CryptoJS from 'crypto-js';
 
 export async function action({ request }: ActionFunctionArgs) {
     const formData = await request.formData();
@@ -7,6 +8,22 @@ export async function action({ request }: ActionFunctionArgs) {
     const password = formData.get('password');
     console.log('Username  ' + username);
     console.log('Password  ' + password);
+
+    const hash = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+    const headers = {
+        'Content-Type': 'application/json'
+    };
+    const body = JSON.stringify({
+        username: username,
+        password: hash
+    });
+    const response = await fetch(`http://localhost:3000/users/login`, {
+        method: 'POST',
+        headers,
+        body
+    });
+    const data = await response.json();
+    console.log('RESPONSE DATA ', data);
     return null;
 }
 

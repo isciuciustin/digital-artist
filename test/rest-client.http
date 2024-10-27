@@ -1,8 +1,21 @@
-GET http://localhost:3000/users/
+GET http://localhost:3000/users
 
+### 
+DELETE http://localhost:3000/users/1
+
+###
+POST http://localhost:3000/users/
 Content-Type: application/json
 
 {
-
+    "username":"admin",
+    "password": "f5bd2911609a9515c25a2d0cf601453b0929e06edbb5d16e3c6eeb8f3bdda54c"
 }
+###
+POST http://localhost:3000/users/login
+Content-Type: application/json
 
+{
+    "username":"admin",
+    "password": "f5bd2911609a9515c25a2d0cf601453b0929e06edbb5d16e3c6eeb8f3bdda54c"
+}

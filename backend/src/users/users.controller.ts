@@ -36,14 +36,19 @@ export class UsersController {
         };
     }
 
-    @Get(':id')
-    async readUser(@Param('id') id: number) {
-        const data = await this.usersService.read(id);
-        return {
-            statusCode: HttpStatus.OK,
-            message: 'User fetched successfully',
-            data
-        };
+    @Post('/login')
+    async readUser(@Body() body: UsersDTO) {
+        const data = await this.usersService.read(body.username, body.password);
+        if (data != null) {
+            return {
+                statusCode: HttpStatus.OK,
+                message: 'LOGIN SUCCESSFUL'
+            };
+        } else
+            return {
+                statusCode: HttpStatus.OK,
+                message: 'LOGIN FAILED'
+            };
     }
 
     // @Patch(':id')
