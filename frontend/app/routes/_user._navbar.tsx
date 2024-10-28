@@ -1,4 +1,7 @@
+import { useLocation } from '@remix-run/react';
+
 export default function Navbar() {
+    const location = useLocation();
     return (
         <nav className="navbar navbar-light bg-light">
             <div className="container-fluid justify-content-start">
@@ -6,7 +9,11 @@ export default function Navbar() {
                     className="navbar-brand"
                     href="/"
                 >
-                    <h1>Digital Artist</h1>
+                    <h1>
+                        {location.pathname == '/dashboard'
+                            ? 'Admin'
+                            : 'Digital Artist'}
+                    </h1>
                 </a>
                 <div className="ms-5">
                     <a

@@ -3,7 +3,8 @@ import {
     Meta,
     Outlet,
     Scripts,
-    ScrollRestoration
+    ScrollRestoration,
+    useLocation
 } from '@remix-run/react';
 import type { LinksFunction, MetaFunction } from '@remix-run/node';
 import Navbar from './routes/_user._navbar';
@@ -36,6 +37,8 @@ export const links: LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+    const location = useLocation();
+    console.log('LOCATION : ', location);
     return (
         <html lang="en">
             <head>
@@ -48,7 +51,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <Links />
             </head>
             <body>
-                <Navbar />
+                {location.pathname != '/login' && <Navbar />}
+
                 {children}
                 <ScrollRestoration />
                 <Scripts />
