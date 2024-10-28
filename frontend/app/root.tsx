@@ -38,7 +38,6 @@ export const links: LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
     const location = useLocation();
-    console.log('LOCATION : ', location);
     return (
         <html lang="en">
             <head>
