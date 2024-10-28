@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { FileUploadModule } from './file-upload/file-upload.module';
+import { PostModule } from './post/post.module';
 
 @Module({
     imports: [
@@ -21,7 +22,8 @@ import { FileUploadModule } from './file-upload/file-upload.module';
             entities: ['dist/**/*.entity{.ts,.js}']
         }),
         UsersModule,
-        FileUploadModule
+        FileUploadModule,
+        PostModule
     ],
     controllers: [AppController],
     providers: [AppService]

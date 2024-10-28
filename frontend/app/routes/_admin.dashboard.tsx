@@ -139,26 +139,6 @@ export default function Dashboard() {
                     </div>
                 </div>
             </div>
-            {/* <div classNameName="mb-3">
-                <label
-                    htmlFor="formFile"
-                    classNameName="form-label"
-                >
-                    Default file input example
-                </label>
-                <Form
-                    method="post"
-                    encType="multipart/form-data"
-                >
-                    <input
-                        id="formFile"
-                        type="file"
-                        classNameName="form-control"
-                        name="image"
-                    />
-                    <button>Upload</button>
-                </Form>
-            </div> */}
         </div>
     );
 }
