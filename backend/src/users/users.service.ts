@@ -17,8 +17,9 @@ export class UsersService {
     }
 
     async create(data: UsersDTO) {
-        const user = this.usersRepository.create(data);
-        await this.usersRepository.save(data);
+        const user = await this.usersRepository.save(
+            this.usersRepository.create(data)
+        );
         return user;
     }
 

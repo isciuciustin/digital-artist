@@ -19,3 +19,13 @@ Content-Type: application/json
     "username":"admin",
     "password": "f5bd2911609a9515c25a2d0cf601453b0929e06edbb5d16e3c6eeb8f3bdda54c"
 }
+
+###
+POST http://localhost:3000/posts/add_post
+
+Content-Type: application/json
+{
+    "title": "",
+    "description": "",
+    "image_key": ""
+}

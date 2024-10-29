@@ -3,7 +3,7 @@ import {
     ActionFunctionArgs,
     unstable_parseMultipartFormData
 } from '@remix-run/node';
-import { Form } from '@remix-run/react';
+import { Form, redirect } from '@remix-run/react';
 
 async function convertToBuffer(a: AsyncIterable<Uint8Array>) {
     const result = [];
@@ -13,53 +13,79 @@ async function convertToBuffer(a: AsyncIterable<Uint8Array>) {
     return Buffer.concat(result);
 }
 
+// export const action: ActionFunction = async ({
+//     request
+// }: ActionFunctionArgs) => {
+//     const uploadHandler = async ({ data, key, contentType }: any) => {
+//         const buffer = await convertToBuffer(data);
+
+//         const formData = new FormData();
+//         const blob = new Blob([buffer], { type: 'application/octet-stream' });
+
+//         formData.append('file', blob, 'file.jpg');
+
+//         const send_response = await fetch(
+//             'http://localhost:3000/file-upload/upload',
+//             {
+//                 method: 'POST',
+//                 body: formData
+//             }
+//         );
+//         const json = await send_response.json();
+//         console.log('SEND RESPONSE : ', json);
+
+//         return key;
+//     };
+
+//     const formData = await unstable_parseMultipartFormData(
+//         request,
+//         uploadHandler
+//     );
+
+//     const fileName = formData.get('upload');
+
+//     return {
+//         filename: fileName
+//     };
+// };
+
 export const action: ActionFunction = async ({
     request
 }: ActionFunctionArgs) => {
-    const uploadHandler = async ({ data, key, contentType }: any) => {
-        const buffer = await convertToBuffer(data);
-
-        const formData = new FormData();
-        const blob = new Blob([buffer], { type: 'application/octet-stream' });
-
-        formData.append('file', blob, 'file.jpg');
-
-        const send_response = await fetch(
-            'http://localhost:3000/file-upload/upload',
-            {
-                method: 'POST',
-                body: formData
-            }
-        );
-        const json = await send_response.json();
-        console.log('SEND RESPONSE : ', json);
-
-        return key;
+    const headers = {
+        'Content-Type': 'application/json'
     };
+    const body = JSON.stringify({
+        title: '',
+        description: '',
+        image_key: ''
+    });
+    const add_post = await fetch(
+        'http://localhost:3000/posts/add_post',
 
-    const formData = await unstable_parseMultipartFormData(
-        request,
-        uploadHandler
+        {
+            method: 'POST',
+            headers,
+            body
+        }
     );
-
-    const fileName = formData.get('upload');
-
-    return {
-        filename: fileName
-    };
+    const response = await add_post.json();
+    console.log(response.id);
+    return redirect(`/dashboard/${response.id}`);
 };
-
 export default function Dashboard() {
     return (
         <div className="d-flex justify-content-center">
-            <button
-                type="button"
-                className="btn btn-primary mt-5"
-                data-bs-toggle="modal"
-                data-bs-target="#staticBackdrop"
-            >
-                Add Post
-            </button>
+            <Form method="POST">
+                <button
+                    type="submit"
+                    className="btn btn-primary mt-5"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"
+                >
+                    Add Post
+                </button>
+            </Form>
             <div
                 className="modal fade"
                 id="staticBackdrop"
