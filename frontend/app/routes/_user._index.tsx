@@ -27,75 +27,89 @@ export default function Index() {
                 data-bs-ride="carousel"
             >
                 <div className="carousel-indicators">
-                    <button
-                        type="button"
-                        data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide-to="0"
-                        className="active"
-                        aria-current="true"
-                        aria-label="Slide 1"
-                    ></button>
-                    <button
-                        type="button"
-                        data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide-to="1"
-                        aria-label="Slide 2"
-                    ></button>
-                    <button
-                        type="button"
-                        data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide-to="2"
-                        aria-label="Slide 3"
-                    ></button>
+                    {loader?.posts[0] && (
+                        <button
+                            type="button"
+                            data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide-to="0"
+                            className="active"
+                            aria-current="true"
+                            aria-label="Slide 1"
+                        ></button>
+                    )}
+                    {loader?.posts[1] && (
+                        <button
+                            type="button"
+                            data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide-to="1"
+                            aria-label="Slide 2"
+                        ></button>
+                    )}
+                    {loader?.posts[2] && (
+                        <button
+                            type="button"
+                            data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide-to="2"
+                            aria-label="Slide 3"
+                        ></button>
+                    )}
                 </div>
                 <div className="carousel-inner">
-                    <div
-                        className="carousel-item active"
-                        data-bs-interval="2000"
-                    >
-                        <img
-                            src={`http://localhost:3000/uploads/${loader.posts[0].image_key}`}
-                            className=" w-100 "
-                            style={{ height: '70vh', objectFit: 'cover' }}
-                            alt=""
-                        />
-                        <div className="carousel-caption d-none d-md-block">
+                    {loader?.posts[0] && (
+                        <div
+                            className="carousel-item active"
+                            data-bs-interval="2000"
+                        >
+                            <img
+                                src={`http://localhost:3000/uploads/${loader.posts[0].image_key}`}
+                                className=" w-100 "
+                                style={{ height: '70vh', objectFit: 'cover' }}
+                                alt=""
+                            />
                             <div className="carousel-caption d-none d-md-block">
-                                <h5>{loader.posts[0].title}</h5>
-                                <p>{loader.posts[0].description}</p>
+                                <div className="carousel-caption d-none d-md-block">
+                                    <h5>{loader.posts[0].title}</h5>
+                                    <p>{loader.posts[0].description}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div
-                        className="carousel-item"
-                        data-bs-interval="2000"
-                    >
-                        <img
-                            src={`http://localhost:3000/uploads/${loader.posts[1].image_key}`}
-                            className=" w-100 "
-                            style={{ height: '70vh', objectFit: 'cover' }}
-                            alt=""
-                        />
-                        <div className="carousel-caption d-none d-md-block">
-                            <h5>{loader.posts[1].title}</h5>
-                            <p>{loader.posts[1].description}</p>
+                    )}
+
+                    {loader?.posts[1] && (
+                        <div
+                            className="carousel-item"
+                            data-bs-interval="2000"
+                        >
+                            <img
+                                src={`http://localhost:3000/uploads/${loader.posts[1].image_key}`}
+                                className=" w-100 "
+                                style={{ height: '70vh', objectFit: 'cover' }}
+                                alt=""
+                            />
+                            <div className="carousel-caption d-none d-md-block">
+                                <h5>{loader?.posts[1]?.title}</h5>
+                                <p>{loader?.posts[1]?.description}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div
-                        className="carousel-item"
-                        data-bs-interval="2000"
-                    >
-                        <img
-                            src={`http://localhost:3000/uploads/${loader.posts[2].image_key}`}
-                            className="w-100"
-                            style={{ height: '70vh', objectFit: 'cover' }}
-                            alt=""
-                        />
-                        <div className="carousel-caption d-none d-md-block">
-                            <h5>{loader.posts[2].title}</h5>
-                            <p>{loader.posts[2].description}</p>
+                    )}
+
+                    {loader?.posts[2] && (
+                        <div
+                            className="carousel-item"
+                            data-bs-interval="2000"
+                        >
+                            <img
+                                src={`http://localhost:3000/uploads/${loader.posts[2].image_key}`}
+                                className="w-100"
+                                style={{ height: '70vh', objectFit: 'cover' }}
+                                alt=""
+                            />
+                            <div className="carousel-caption d-none d-md-block">
+                                <h5>{loader.posts[2].title}</h5>
+                                <p>{loader.posts[2].description}</p>
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
                 <button
                     className="carousel-control-prev"
