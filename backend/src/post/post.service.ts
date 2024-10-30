@@ -27,8 +27,12 @@ export class PostService {
         return `This action returns a #${id} post`;
     }
 
-    update(id: number, updatePostDto: UpdatePostDto) {
-        return `This action updates a #${id} post`;
+    async add_image_key(id: string, image_key: string) {
+        const post = await this.postRepository.update(
+            { id: Number(id) },
+            { image_key: image_key }
+        );
+        return post;
     }
 
     remove(id: number) {

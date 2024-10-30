@@ -1,84 +1,48 @@
-import {
-    ActionFunction,
-    ActionFunctionArgs,
-    unstable_parseMultipartFormData
-} from '@remix-run/node';
-import { Form, redirect } from '@remix-run/react';
+import { Form, Outlet, useParams } from '@remix-run/react';
+import { ChangeEvent, useState } from 'react';
 
-async function convertToBuffer(a: AsyncIterable<Uint8Array>) {
-    const result = [];
-    for await (const chunk of a) {
-        result.push(chunk);
-    }
-    return Buffer.concat(result);
-}
-
-// export const action: ActionFunction = async ({
-//     request
-// }: ActionFunctionArgs) => {
-//     const uploadHandler = async ({ data, key, contentType }: any) => {
-//         const buffer = await convertToBuffer(data);
-
-//         const formData = new FormData();
-//         const blob = new Blob([buffer], { type: 'application/octet-stream' });
-
-//         formData.append('file', blob, 'file.jpg');
-
-//         const send_response = await fetch(
-//             'http://localhost:3000/file-upload/upload',
-//             {
-//                 method: 'POST',
-//                 body: formData
-//             }
-//         );
-//         const json = await send_response.json();
-//         console.log('SEND RESPONSE : ', json);
-
-//         return key;
-//     };
-
-//     const formData = await unstable_parseMultipartFormData(
-//         request,
-//         uploadHandler
-//     );
-
-//     const fileName = formData.get('upload');
-
-//     return {
-//         filename: fileName
-//     };
-// };
-
-export const action: ActionFunction = async ({
-    request
-}: ActionFunctionArgs) => {
-    const headers = {
-        'Content-Type': 'application/json'
-    };
-    const body = JSON.stringify({
-        title: '',
-        description: '',
-        image_key: ''
-    });
-    const add_post = await fetch(
-        'http://localhost:3000/posts/add_post',
-
-        {
-            method: 'POST',
-            headers,
-            body
-        }
-    );
-    const response = await add_post.json();
-    console.log(response.id);
-    return redirect(`/dashboard/${response.id}`);
-};
 export default function Dashboard() {
+    const params = useParams();
+    const [file, setFile] = useState<File>();
+
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            setFile(e.target.files[0]);
+        }
+    };
+
+    const handleUploadClick = async () => {
+        if (!file) {
+            return;
+        }
+        const formData = new FormData();
+        formData.append('file', file, file.name);
+        const send_response = await fetch(
+            'http://localhost:3000/file-upload/upload',
+            {
+                method: 'POST',
+                body: formData
+            }
+        );
+        let json = await send_response.json();
+        const add_image_key = await fetch(
+            `http://localhost:3000/posts/add_image_key/${params.id}/${
+                json.filePath.split('/')[1]
+            }`,
+            {
+                method: 'PATCH'
+            }
+        );
+        json = await add_image_key.json();
+    };
+
     return (
         <div className="d-flex justify-content-center">
-            <Form method="POST">
+            <Form
+                method="POST"
+                action={`/dashboard/modal/${params.id}`}
+            >
                 <button
-                    type="submit"
                     className="btn btn-primary mt-5"
                     data-bs-toggle="modal"
                     data-bs-target="#staticBackdrop"
@@ -86,6 +50,7 @@ export default function Dashboard() {
                     Add Post
                 </button>
             </Form>
+            <Outlet />
             <div
                 className="modal fade"
                 id="staticBackdrop"
@@ -122,10 +87,17 @@ export default function Dashboard() {
                                             Upload an image
                                         </label>
                                         <input
+                                            onChange={handleFileChange}
                                             className="form-control"
                                             type="file"
                                             id="formFile"
                                         />
+                                        <button
+                                            name="action"
+                                            onClick={handleUploadClick}
+                                        >
+                                            Upload Image
+                                        </button>
                                     </div>
                                 </div>
                                 <div className="col">

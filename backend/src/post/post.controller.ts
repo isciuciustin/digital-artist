@@ -30,9 +30,9 @@ export class PostController {
         return this.postService.findOne(+id);
     }
 
-    @Patch(':id')
-    update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-        return this.postService.update(+id, updatePostDto);
+    @Patch('/add_image_key/:id/:image_key')
+    update(@Param('id') id: string, @Param('image_key') image_key: string) {
+        return this.postService.add_image_key(id, image_key);
     }
 
     @Delete(':id')
