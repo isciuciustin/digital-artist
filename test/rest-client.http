@@ -40,5 +40,16 @@ Content-Type: application/json
     "image_key": ""
 }
 
+### GET POST
+GET http://localhost:3000/posts/get_posts
+Content-Type: application/json
+
+{
+    "title": "Title",
+    "description": "Description3",
+    "image_key": ""
+}
+
+
 ### DELETE POST
 DELETE  http://localhost:3000/posts/delete_post/57

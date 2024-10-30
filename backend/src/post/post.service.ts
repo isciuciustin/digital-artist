@@ -18,8 +18,8 @@ export class PostService {
         return post;
     }
 
-    findAll() {
-        return `This action returns all post`;
+    async findAll() {
+        return await this.postRepository.find();
     }
 
     async findOne(id: number) {

@@ -1,11 +1,21 @@
 import {
     Form,
-    Outlet,
+    json,
     redirect,
     useFetcher,
+    useLoaderData,
+    useNavigate,
     useParams
 } from '@remix-run/react';
 import { ChangeEvent, useState } from 'react';
+
+export async function loader() {
+    const get_posts = await fetch(`http://localhost:3000/posts/get_posts`, {
+        method: 'GET'
+    });
+    const jsonData = await get_posts.json();
+    return json({ posts: jsonData });
+}
 
 export const action = async () => {
     const add_post = await fetch(`http://localhost:3000/posts/add_post`, {
@@ -20,9 +30,22 @@ export const action = async () => {
     return redirect(`/dashboard/modal/${jsonData.id}`);
 };
 
+interface Post {
+    id: number;
+    title: string;
+    description: string;
+    image_key: string;
+}
+interface Loader {
+    posts: Array<Post>;
+}
+
 export default function Dashboard() {
     const params = useParams();
     const fetcher = useFetcher();
+    const navigate = useNavigate();
+    const loader = useLoaderData() as Loader;
+
     const [file, setFile] = useState<File>();
     const [image, setImage] = useState('');
     const [title, setTitle] = useState('');
@@ -62,8 +85,11 @@ export default function Dashboard() {
         json = await add_image_key.json();
     };
     return (
-        <div className="d-flex justify-content-center">
-            <Form method="POST">
+        <div>
+            <Form
+                method="POST"
+                className="d-flex justify-content-center"
+            >
                 <button
                     className="btn btn-primary mt-5"
                     data-bs-toggle="modal"
@@ -72,7 +98,43 @@ export default function Dashboard() {
                     Add Post
                 </button>
             </Form>
-            <Outlet />
+            <div className="container-fluid mt-5 me-2 ms-2 ">
+                <div
+                    className="w-100 h-100 row row-cols-1 row-cols-sm-2 row-cols-md-3 mt-3 md:gap-3"
+                    style={{ maxHeight: '200px' }}
+                >
+                    {Array.isArray(loader.posts) &&
+                        loader.posts.map((post: Post) => {
+                            return (
+                                <button
+                                    key={post.id}
+                                    className="col"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop"
+                                    style={{
+                                        border: 'none',
+                                        backgroundColor: 'transparent'
+                                    }}
+                                    onClick={() => {
+                                        setImage(
+                                            `http://localhost:3000/uploads/${post.image_key}`
+                                        );
+                                        setTitle(post.title);
+                                        setDescription(post.description);
+                                        navigate(`/dashboard/modal/${post.id}`);
+                                    }}
+                                >
+                                    <img
+                                        style={{ objectFit: 'fill' }}
+                                        className=" w-100 h-100"
+                                        src={`http://localhost:3000/uploads/${post.image_key}`}
+                                        alt=""
+                                    />
+                                </button>
+                            );
+                        })}
+                </div>
+            </div>
             <div
                 className="modal fade"
                 id="staticBackdrop"
@@ -92,6 +154,12 @@ export default function Dashboard() {
                                 Add a post
                             </h5>
                             <button
+                                onClick={() => {
+                                    setImage('');
+                                    setTitle('');
+                                    setDescription('');
+                                    navigate('/dashboard');
+                                }}
                                 type="button"
                                 className="btn-close"
                                 data-bs-dismiss="modal"
