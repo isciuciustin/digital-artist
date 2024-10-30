@@ -6,12 +6,14 @@ export async function action({ request }: ActionFunctionArgs) {
     const formData = await request.formData();
     const username = formData.get('username');
     const password = formData.get('password');
-
     // HASHING THE PASSWORD
     const hash = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
     const headers = {
         'Content-Type': 'application/json'
     };
+
+    console.log('HASH : ', hash);
+
     const body = JSON.stringify({
         username: username,
         password: hash

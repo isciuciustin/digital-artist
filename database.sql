@@ -7,7 +7,7 @@ CREATE TABLE users(
     PRIMARY KEY(id)
 );
 
-INSERT INTO users(username, password) VALUES ('admin', 'f5bd2911609a9515c25a2d0cf601453b0929e06edbb5d16e3c6');
+INSERT INTO users(username, password) VALUES ('admin', 'f5bd2911609a9515c25a2d0cf601453b0929e06edbb5d16e3c6eeb8f3bdda54c');
 
 CREATE TABLE posts(
     id  int NOT NULL AUTO_INCREMENT,
