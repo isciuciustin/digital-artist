@@ -2,7 +2,7 @@
 GET http://localhost:3000/users
 
 ### DELETE USER
-DELETE http://localhost:3000/users/1
+DELETE http://localhost:3000/users/5
 
 ### ADD USER
 POST http://localhost:3000/users/
@@ -21,17 +21,32 @@ Content-Type: application/json
     "password": "f5bd2911609a9515c25a2d0cf601453b0929e06edbb5d16e3c6eeb8f3bdda54c"
 }
 
-### ADD POST
-POST http://localhost:3000/posts/add_post
+### ADD PROJECT
+POST http://localhost:3000/projects/add_project
 Content-Type: application/json
+
 {
     "title": "",
     "description": "",
-    "image_key": ""
+    "image_key": "",
+    "hidden": false,
+    "customer_link": ""
 }
 
-### UPDATE POST
-PATCH http://localhost:3000/posts/update_post/78
+### UPDATE PROJECT
+PATCH http://localhost:3000/projects/update_project/78
+Content-Type: application/json
+
+{
+    "title": "Title",
+    "description": "Description3",
+    "image_key": "",
+    "customer_link": "link",
+    "hidden": true
+}
+
+### GET PROJECT
+GET http://localhost:3000/projects/get_projects
 Content-Type: application/json
 
 {
@@ -40,16 +55,15 @@ Content-Type: application/json
     "image_key": ""
 }
 
-### GET POST
-GET http://localhost:3000/posts/get_posts
+
+### GET PROJECT
+GET http://localhost:3000/projects/get_projects_non_hidden
 Content-Type: application/json
 
 {
-    "title": "Title",
-    "description": "Description3",
-    "image_key": ""
+
 }
 
 
-### DELETE POST
-DELETE  http://localhost:3000/posts/delete_post/57
+### DELETE PROJECT
+DELETE  http://localhost:3000/projects/delete_project/115

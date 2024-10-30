@@ -23,24 +23,11 @@ export class UsersService {
         return user;
     }
 
-    // async findByEmail(email: string): Promise<UsersDTO> {
-    //     return await this.usersRepository.findOne({
-    //         where: {
-    //             email: email
-    //         }
-    //     });
-    // }
-
     async read(username: string, password: string) {
         return await this.usersRepository.findOne({
             where: { username: username, password: password }
         });
     }
-
-    // async update(id: number, data: Partial<UsersDTO>) {
-    //     await this.usersRepository.update({ id }, data);
-    //     return await this.usersRepository.findOne({ id });
-    // }
 
     async destroy(id: number) {
         await this.usersRepository.delete({ id });

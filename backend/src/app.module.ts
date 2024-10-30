@@ -5,7 +5,7 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { FileUploadModule } from './file-upload/file-upload.module';
-import { PostModule } from './post/post.module';
+import { ProjectModule } from './project/project.module';
 
 @Module({
     imports: [
@@ -23,7 +23,7 @@ import { PostModule } from './post/post.module';
         }),
         UsersModule,
         FileUploadModule,
-        PostModule
+        ProjectModule
     ],
     controllers: [AppController],
     providers: [AppService]

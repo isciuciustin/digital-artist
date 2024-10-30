@@ -1,12 +1,12 @@
 import { ActionFunctionArgs, redirect } from '@remix-run/node';
 
 export const action = async ({ params }: ActionFunctionArgs) => {
-    const add_post = await fetch(
-        `http://localhost:3000/posts/delete_post/${params.id}/`,
+    const add_project = await fetch(
+        `http://localhost:3000/projects/delete_project/${params.id}/`,
         {
             method: 'DELETE'
         }
     );
-    const jsonData = await add_post.json();
+    const jsonData = await add_project.json();
     return redirect('/dashboard');
 };

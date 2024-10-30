@@ -1,24 +1,29 @@
 import { json, useLoaderData } from '@remix-run/react';
 
 export async function loader() {
-    const get_posts = await fetch(`http://localhost:3000/posts/get_posts`, {
-        method: 'GET'
-    });
-    const jsonData = await get_posts.json();
-    return json({ posts: jsonData });
+    const get_projects = await fetch(
+        `http://localhost:3000/projects/get_projects_non_hidden`,
+        {
+            method: 'GET'
+        }
+    );
+    const jsonData = await get_projects.json();
+    console.log('json data', jsonData);
+    return json({ projects: jsonData });
 }
 
-interface Post {
+interface Project {
     id: number;
     title: string;
     description: string;
     image_key: string;
 }
 interface Loader {
-    posts: Array<Post>;
+    projects: Array<Project>;
 }
 export default function Index() {
     const loader = useLoaderData() as Loader;
+
     return (
         <>
             <div
@@ -27,7 +32,7 @@ export default function Index() {
                 data-bs-ride="carousel"
             >
                 <div className="carousel-indicators">
-                    {loader?.posts[0] && (
+                    {loader?.projects[0] && (
                         <button
                             type="button"
                             data-bs-target="#carouselExampleIndicators"
@@ -37,7 +42,7 @@ export default function Index() {
                             aria-label="Slide 1"
                         ></button>
                     )}
-                    {loader?.posts[1] && (
+                    {loader?.projects[1] && (
                         <button
                             type="button"
                             data-bs-target="#carouselExampleIndicators"
@@ -45,7 +50,7 @@ export default function Index() {
                             aria-label="Slide 2"
                         ></button>
                     )}
-                    {loader?.posts[2] && (
+                    {loader?.projects[2] && (
                         <button
                             type="button"
                             data-bs-target="#carouselExampleIndicators"
@@ -55,58 +60,58 @@ export default function Index() {
                     )}
                 </div>
                 <div className="carousel-inner">
-                    {loader?.posts[0] && (
+                    {loader?.projects[0] && (
                         <div
                             className="carousel-item active"
                             data-bs-interval="2000"
                         >
                             <img
-                                src={`http://localhost:3000/uploads/${loader.posts[0].image_key}`}
+                                src={`http://localhost:3000/uploads/${loader.projects[0].image_key}`}
                                 className=" w-100 "
                                 style={{ height: '70vh', objectFit: 'cover' }}
                                 alt=""
                             />
                             <div className="carousel-caption d-none d-md-block">
                                 <div className="carousel-caption d-none d-md-block">
-                                    <h5>{loader.posts[0].title}</h5>
-                                    <p>{loader.posts[0].description}</p>
+                                    <h5>{loader.projects[0].title}</h5>
+                                    <p>{loader.projects[0].description}</p>
                                 </div>
                             </div>
                         </div>
                     )}
 
-                    {loader?.posts[1] && (
+                    {loader?.projects[1] && (
                         <div
                             className="carousel-item"
                             data-bs-interval="2000"
                         >
                             <img
-                                src={`http://localhost:3000/uploads/${loader.posts[1].image_key}`}
+                                src={`http://localhost:3000/uploads/${loader.projects[1].image_key}`}
                                 className=" w-100 "
                                 style={{ height: '70vh', objectFit: 'cover' }}
                                 alt=""
                             />
                             <div className="carousel-caption d-none d-md-block">
-                                <h5>{loader?.posts[1]?.title}</h5>
-                                <p>{loader?.posts[1]?.description}</p>
+                                <h5>{loader?.projects[1]?.title}</h5>
+                                <p>{loader?.projects[1]?.description}</p>
                             </div>
                         </div>
                     )}
 
-                    {loader?.posts[2] && (
+                    {loader?.projects[2] && (
                         <div
                             className="carousel-item"
                             data-bs-interval="2000"
                         >
                             <img
-                                src={`http://localhost:3000/uploads/${loader.posts[2].image_key}`}
+                                src={`http://localhost:3000/uploads/${loader.projects[2].image_key}`}
                                 className="w-100"
                                 style={{ height: '70vh', objectFit: 'cover' }}
                                 alt=""
                             />
                             <div className="carousel-caption d-none d-md-block">
-                                <h5>{loader.posts[2].title}</h5>
-                                <p>{loader.posts[2].description}</p>
+                                <h5>{loader.projects[2].title}</h5>
+                                <p>{loader.projects[2].description}</p>
                             </div>
                         </div>
                     )}

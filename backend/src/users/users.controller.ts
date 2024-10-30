@@ -1,12 +1,12 @@
 import {
     Controller,
     Get,
-    Post,
     Patch,
     Delete,
     Body,
     Param,
-    HttpStatus
+    HttpStatus,
+    Post
 } from '@nestjs/common';
 
 import { UsersService } from './users.service';
@@ -50,18 +50,6 @@ export class UsersController {
                 message: 'LOGIN FAILED'
             };
     }
-
-    // @Patch(':id')
-    // async uppdateUser(
-    //     @Param('id') id: number,
-    //     @Body() data: Partial<UsersDTO>
-    // ) {
-    //     await this.usersService.update(id, data);
-    //     return {
-    //         statusCode: HttpStatus.OK,
-    //         message: 'User updated successfully'
-    //     };
-    // }
 
     @Delete(':id')
     async deleteUser(@Param('id') id: number) {

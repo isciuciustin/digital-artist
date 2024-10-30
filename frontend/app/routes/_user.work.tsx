@@ -2,34 +2,40 @@ import { json, redirect, useLoaderData } from '@remix-run/react';
 import { useState } from 'react';
 
 export async function loader() {
-    const get_posts = await fetch(`http://localhost:3000/posts/get_posts`, {
-        method: 'GET'
-    });
-    const jsonData = await get_posts.json();
-    return json({ posts: jsonData });
+    const get_projects = await fetch(
+        `http://localhost:3000/projects/get_projects_non_hidden`,
+        {
+            method: 'GET'
+        }
+    );
+    const jsonData = await get_projects.json();
+    return json({ projects: jsonData });
 }
 
 export const action = async () => {
-    const add_post = await fetch(`http://localhost:3000/posts/add_post`, {
-        method: 'POST',
-        body: JSON.stringify({
-            title: '',
-            description: '',
-            image_key: ''
-        })
-    });
-    const jsonData = await add_post.json();
+    const add_project = await fetch(
+        `http://localhost:3000/projects/add_project`,
+        {
+            method: 'POST',
+            body: JSON.stringify({
+                title: '',
+                description: '',
+                image_key: ''
+            })
+        }
+    );
+    const jsonData = await add_project.json();
     return redirect(`/dashboard/modal/${jsonData.id}`);
 };
 
-interface Post {
+interface Project {
     id: number;
     title: string;
     description: string;
     image_key: string;
 }
 interface Loader {
-    posts: Array<Post>;
+    projects: Array<Project>;
 }
 export default function Work() {
     const loader = useLoaderData() as Loader;
@@ -43,11 +49,11 @@ export default function Work() {
                     className="w-100 h-100 row row-cols-1 row-cols-sm-2 row-cols-md-3 mt-3 md:gap-3"
                     style={{ maxHeight: '200px' }}
                 >
-                    {Array.isArray(loader.posts) &&
-                        loader.posts.map((post: Post) => {
+                    {Array.isArray(loader.projects) &&
+                        loader.projects.map((project: Project) => {
                             return (
                                 <button
-                                    key={post.id}
+                                    key={project.id}
                                     className="col"
                                     data-bs-toggle="modal"
                                     data-bs-target="#staticBackdrop"
@@ -57,17 +63,17 @@ export default function Work() {
                                     }}
                                     onClick={() => {
                                         setImage(
-                                            `http://localhost:3000/uploads/${post.image_key}`
+                                            `http://localhost:3000/uploads/${project.image_key}`
                                         );
-                                        setTitle(post.title);
-                                        setDescription(post.description);
-                                        // navigate(`/dashboard/modal/${post.id}`);
+                                        setTitle(project.title);
+                                        setDescription(project.description);
+                                        // navigate(`/dashboard/modal/${project.id}`);
                                     }}
                                 >
                                     <img
                                         style={{ objectFit: 'fill' }}
                                         className=" w-100 h-100"
-                                        src={`http://localhost:3000/uploads/${post.image_key}`}
+                                        src={`http://localhost:3000/uploads/${project.image_key}`}
                                         alt=""
                                     />
                                 </button>

@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-@Entity('posts')
-export class PostEntity {
+@Entity('projects')
+export class ProjectEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -12,4 +12,10 @@ export class PostEntity {
 
     @Column({ default: '' })
     image_key: string;
+
+    @Column({ default: false })
+    hidden: boolean;
+
+    @Column({ default: '' })
+    customer_link: string;
 }

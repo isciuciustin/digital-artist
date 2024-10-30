@@ -10,34 +10,44 @@ import {
 import { ChangeEvent, useState } from 'react';
 
 export async function loader() {
-    const get_posts = await fetch(`http://localhost:3000/posts/get_posts`, {
-        method: 'GET'
-    });
-    const jsonData = await get_posts.json();
-    return json({ posts: jsonData });
+    const get_projects = await fetch(
+        `http://localhost:3000/projects/get_projects`,
+        {
+            method: 'GET'
+        }
+    );
+    const jsonData = await get_projects.json();
+    return json({ projects: jsonData });
 }
 
 export const action = async () => {
-    const add_post = await fetch(`http://localhost:3000/posts/add_post`, {
-        method: 'POST',
-        body: JSON.stringify({
-            title: '',
-            description: '',
-            image_key: ''
-        })
-    });
-    const jsonData = await add_post.json();
+    const add_project = await fetch(
+        `http://localhost:3000/projects/add_project`,
+        {
+            method: 'POST',
+            body: JSON.stringify({
+                title: '',
+                description: '',
+                image_key: '',
+                hidden: false,
+                customer_link: ''
+            })
+        }
+    );
+    const jsonData = await add_project.json();
     return redirect(`/dashboard/modal/${jsonData.id}`);
 };
 
-interface Post {
+interface Project {
     id: number;
     title: string;
     description: string;
     image_key: string;
+    customer_link: string;
+    hidden: boolean;
 }
 interface Loader {
-    posts: Array<Post>;
+    projects: Array<Project>;
 }
 
 export default function Dashboard() {
@@ -50,7 +60,8 @@ export default function Dashboard() {
     const [image, setImage] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-
+    const [customer_link, set_customer_link] = useState('');
+    const [hidden, setHidden] = useState(false);
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             setFile(e.target.files[0]);
@@ -72,7 +83,7 @@ export default function Dashboard() {
         );
         let json = await send_response.json();
         const add_image_key = await fetch(
-            `http://localhost:3000/posts/add_image_key/${params.id}/${
+            `http://localhost:3000/projects/add_image_key/${params.id}/${
                 json.filePath.split('/')[1]
             }`,
             {
@@ -95,16 +106,16 @@ export default function Dashboard() {
                     data-bs-toggle="modal"
                     data-bs-target="#staticBackdrop"
                 >
-                    Add Post
+                    Add Project
                 </button>
             </Form>
             <div className="container-fluid mt-5 me-2 ms-2 ">
                 <div className="w-100 h-100 row row-cols-1 row-cols-sm-2 row-cols-md-3 mt-3 md:gap-3">
-                    {Array.isArray(loader.posts) &&
-                        loader.posts.map((post: Post) => {
+                    {Array.isArray(loader.projects) &&
+                        loader.projects.map((project: Project) => {
                             return (
                                 <button
-                                    key={post.id}
+                                    key={project.id}
                                     className="col"
                                     data-bs-toggle="modal"
                                     data-bs-target="#staticBackdrop"
@@ -114,17 +125,23 @@ export default function Dashboard() {
                                     }}
                                     onClick={() => {
                                         setImage(
-                                            `http://localhost:3000/uploads/${post.image_key}`
+                                            `http://localhost:3000/uploads/${project.image_key}`
                                         );
-                                        setTitle(post.title);
-                                        setDescription(post.description);
-                                        navigate(`/dashboard/modal/${post.id}`);
+                                        setTitle(project.title);
+                                        setDescription(project.description);
+                                        set_customer_link(
+                                            project.customer_link
+                                        );
+                                        setHidden(project.hidden);
+                                        navigate(
+                                            `/dashboard/modal/${project.id}`
+                                        );
                                     }}
                                 >
                                     <img
                                         style={{ objectFit: 'fill' }}
                                         className=" w-100 h-100"
-                                        src={`http://localhost:3000/uploads/${post.image_key}`}
+                                        src={`http://localhost:3000/uploads/${project.image_key}`}
                                         alt=""
                                     />
                                 </button>
@@ -148,7 +165,7 @@ export default function Dashboard() {
                                 className="modal-title"
                                 id="staticBackdropLabel"
                             >
-                                Add a post
+                                Add a project
                             </h5>
                             <button
                                 onClick={() => {
@@ -231,7 +248,7 @@ export default function Dashboard() {
                                                 htmlFor="Title"
                                                 className="form-label"
                                             >
-                                                Title*
+                                                Title
                                             </label>
                                             <input
                                                 type="text"
@@ -250,7 +267,7 @@ export default function Dashboard() {
                                                 htmlFor="Description"
                                                 className="form-label"
                                             >
-                                                Description*
+                                                Description
                                             </label>
                                             <textarea
                                                 className="form-control"
@@ -265,13 +282,52 @@ export default function Dashboard() {
                                                 }}
                                             ></textarea>
                                         </div>
+                                        <div className="form-check form-switch mt-3">
+                                            <input
+                                                className="form-check-input"
+                                                type="checkbox"
+                                                id="switch"
+                                                name="hidden"
+                                                checked={hidden}
+                                                onChange={() => {
+                                                    setHidden(!hidden);
+                                                }}
+                                            />
+                                            <label
+                                                className="form-check-label "
+                                                htmlFor="switch"
+                                            >
+                                                Hide this project
+                                            </label>
+                                        </div>
+                                        <div className="mb-3 row d-flex justify-content-center mt-3">
+                                            <label
+                                                htmlFor="customer_link"
+                                                className="form-label"
+                                            >
+                                                Customer Website
+                                            </label>
+                                            <input
+                                                type="text"
+                                                name="customer_link"
+                                                className="form-control"
+                                                id="customer_link"
+                                                placeholder="Write a url"
+                                                value={customer_link}
+                                                onChange={(e) => {
+                                                    set_customer_link(
+                                                        e.target.value
+                                                    );
+                                                }}
+                                            />
+                                        </div>
                                         <button
                                             type="submit"
                                             disabled={fetcher.state != 'idle'}
                                             className="btn btn-primary"
                                         >
                                             {fetcher.state == 'idle'
-                                                ? 'Update post'
+                                                ? 'Update project'
                                                 : 'Updating...'}
                                         </button>
                                     </fetcher.Form>
@@ -281,7 +337,7 @@ export default function Dashboard() {
                         <div className="modal-footer d-flex justify-content-center">
                             <fetcher.Form
                                 method="POST"
-                                action={`/dashboard/modal/delete_post/${params.id}`}
+                                action={`/dashboard/modal/delete_project/${params.id}`}
                             >
                                 <button
                                     onClick={() => {
@@ -294,7 +350,7 @@ export default function Dashboard() {
                                     type="submit"
                                     className="btn btn-outline-danger"
                                 >
-                                    Delete this post
+                                    Delete this project
                                 </button>
                             </fetcher.Form>
                         </div>
