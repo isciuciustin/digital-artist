@@ -35,15 +35,15 @@ export class PostService {
         );
         return post;
     }
+
     async update_post(id: string, title: string, description: string) {
-        const post = await this.postRepository.update(
-            { id: Number(id) },
-            { title: title, description: description }
-        );
-        return post;
+        const entity = await this.postRepository.findOneBy({ id: Number(id) });
+        entity.title = title;
+        entity.description = description;
+        return await this.postRepository.save(entity);
     }
 
-    remove(id: number) {
-        return `This action removes a #${id} post`;
+    async delete_post(id: number) {
+        return await this.postRepository.delete({ id });
     }
 }

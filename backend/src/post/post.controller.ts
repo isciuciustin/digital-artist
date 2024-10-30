@@ -35,16 +35,17 @@ export class PostController {
         return this.postService.add_image_key(id, image_key);
     }
 
-    @Patch('/add_post/:id/:title/:description')
-    update_post(
-        @Param('id') id: string,
-        @Param('title') title: string,
-        @Param('description') description: string
-    ) {
-        return this.postService.update_post(id, title, description);
+    @Patch('/update_post/:id')
+    update_post(@Param('id') id: string, @Body() createPostDto: CreatePostDto) {
+        return this.postService.update_post(
+            id,
+            createPostDto.title,
+            createPostDto.description
+        );
     }
-    @Delete(':id')
-    remove(@Param('id') id: string) {
-        return this.postService.remove(+id);
+
+    @Delete('/delete_post/:id')
+    delete_post(@Param('id') id: string) {
+        return this.postService.delete_post(Number(id));
     }
 }

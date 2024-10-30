@@ -1,5 +1,25 @@
-import { Form, Outlet, useFetcher, useParams } from '@remix-run/react';
+import {
+    Form,
+    Outlet,
+    redirect,
+    useFetcher,
+    useParams
+} from '@remix-run/react';
 import { ChangeEvent, useState } from 'react';
+
+export const action = async () => {
+    const add_post = await fetch(`http://localhost:3000/posts/add_post`, {
+        method: 'POST',
+        body: JSON.stringify({
+            title: '',
+            description: '',
+            image_key: ''
+        })
+    });
+    const jsonData = await add_post.json();
+    console.log('RESPONSE ADD POST : ', jsonData);
+    return redirect(`/dashboard/modal/${jsonData.id}`);
+};
 
 export default function Dashboard() {
     const params = useParams();
@@ -42,10 +62,7 @@ export default function Dashboard() {
     };
     return (
         <div className="d-flex justify-content-center">
-            <Form
-                method="POST"
-                action={`/dashboard/modal/${params.id}`}
-            >
+            <Form method="POST">
                 <button
                     className="btn btn-primary mt-5"
                     data-bs-toggle="modal"
@@ -184,6 +201,21 @@ export default function Dashboard() {
                                     </fetcher.Form>
                                 </div>
                             </div>
+                        </div>
+                        <div className="modal-footer d-flex justify-content-center">
+                            <fetcher.Form
+                                method="POST"
+                                action={`/dashboard/modal/delete_post/${params.id}`}
+                            >
+                                <button
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                    type="submit"
+                                    className="btn btn-outline-danger"
+                                >
+                                    Delete this post
+                                </button>
+                            </fetcher.Form>
                         </div>
                     </div>
                 </div>

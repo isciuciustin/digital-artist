@@ -15,7 +15,7 @@ async function convertToBuffer(a: AsyncIterable<Uint8Array>) {
 export const action: ActionFunction = async ({
     request
 }: ActionFunctionArgs) => {
-    const uploadHandler = async ({ data, key, contentType }: any) => {
+    const uploadHandler = async ({ data, key }: any) => {
         const buffer = await convertToBuffer(data);
 
         const formData = new FormData();

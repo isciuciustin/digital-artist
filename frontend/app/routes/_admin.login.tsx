@@ -22,7 +22,7 @@ export async function action({ request }: ActionFunctionArgs) {
         body
     });
     const data = await response.json();
-    let errors = {
+    const errors = {
         password: '',
         login_error: ''
     };
