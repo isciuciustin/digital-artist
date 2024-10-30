@@ -31,7 +31,6 @@ export const action: ActionFunction = async ({
             }
         );
         const json = await send_response.json();
-        console.log('SEND RESPONSE : ', json);
 
         return key;
     };

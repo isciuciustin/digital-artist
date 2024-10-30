@@ -8,6 +8,5 @@ export const action = async ({ params }: ActionFunctionArgs) => {
         }
     );
     const jsonData = await add_post.json();
-    console.log('RESPONSE DELETE POST : ', jsonData);
     return redirect('/dashboard');
 };

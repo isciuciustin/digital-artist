@@ -31,7 +31,7 @@ Content-Type: application/json
 }
 
 ### UPDATE POST
-PATCH http://localhost:3000/posts/update_post/63
+PATCH http://localhost:3000/posts/update_post/78
 Content-Type: application/json
 
 {

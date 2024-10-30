@@ -17,7 +17,6 @@ export const action = async () => {
         })
     });
     const jsonData = await add_post.json();
-    console.log('RESPONSE ADD POST : ', jsonData);
     return redirect(`/dashboard/modal/${jsonData.id}`);
 };
 
@@ -26,6 +25,8 @@ export default function Dashboard() {
     const fetcher = useFetcher();
     const [file, setFile] = useState<File>();
     const [image, setImage] = useState('');
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -173,6 +174,10 @@ export default function Dashboard() {
                                                 className="form-control"
                                                 id="Title"
                                                 placeholder="Write a title"
+                                                value={title}
+                                                onChange={(e) => {
+                                                    setTitle(e.target.value);
+                                                }}
                                             />
                                         </div>
                                         <div className="mb-3 row  d-flex justify-content-center">
@@ -187,6 +192,12 @@ export default function Dashboard() {
                                                 id="Description"
                                                 name="description"
                                                 rows={3}
+                                                value={description}
+                                                onChange={(e) => {
+                                                    setDescription(
+                                                        e.target.value
+                                                    );
+                                                }}
                                             ></textarea>
                                         </div>
                                         <button
@@ -208,6 +219,11 @@ export default function Dashboard() {
                                 action={`/dashboard/modal/delete_post/${params.id}`}
                             >
                                 <button
+                                    onClick={() => {
+                                        setImage('');
+                                        setTitle('');
+                                        setDescription('');
+                                    }}
                                     data-bs-dismiss="modal"
                                     aria-label="Close"
                                     type="submit"
