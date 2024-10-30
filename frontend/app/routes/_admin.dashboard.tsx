@@ -1,9 +1,11 @@
-import { Form, Outlet, useParams } from '@remix-run/react';
+import { Form, Outlet, useFetcher, useParams } from '@remix-run/react';
 import { ChangeEvent, useState } from 'react';
 
 export default function Dashboard() {
     const params = useParams();
+    const fetcher = useFetcher();
     const [file, setFile] = useState<File>();
+    const [image, setImage] = useState('');
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -33,9 +35,11 @@ export default function Dashboard() {
                 method: 'PATCH'
             }
         );
+        setImage(
+            'http://localhost:3000/uploads/' + json.filePath.split('/')[1]
+        );
         json = await add_image_key.json();
     };
-
     return (
         <div className="d-flex justify-content-center">
             <Form
@@ -80,57 +84,104 @@ export default function Dashboard() {
                             <div className="row row-cols-2">
                                 <div className="col d-flex justify-content-center">
                                     <div className="mb-3">
-                                        <label
-                                            htmlFor="formFile"
-                                            className="form-label"
-                                        >
-                                            Upload an image
-                                        </label>
-                                        <input
-                                            onChange={handleFileChange}
-                                            className="form-control"
-                                            type="file"
-                                            id="formFile"
-                                        />
-                                        <button
-                                            name="action"
-                                            onClick={handleUploadClick}
-                                        >
-                                            Upload Image
-                                        </button>
+                                        {image ? (
+                                            <>
+                                                <img
+                                                    className="img-fluid w-100"
+                                                    alt=""
+                                                    src={image}
+                                                />
+                                                <label
+                                                    htmlFor="formFile"
+                                                    className="form-label"
+                                                >
+                                                    Upload another image
+                                                </label>
+
+                                                <input
+                                                    onChange={handleFileChange}
+                                                    className="form-control"
+                                                    type="file"
+                                                    id="formFile"
+                                                />
+                                                <button
+                                                    className="btn btn-primary mt-3"
+                                                    name="action"
+                                                    onClick={handleUploadClick}
+                                                >
+                                                    Change Image
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <label
+                                                    htmlFor="formFile"
+                                                    className="form-label"
+                                                >
+                                                    Upload an image
+                                                </label>
+
+                                                <input
+                                                    onChange={handleFileChange}
+                                                    className="form-control"
+                                                    type="file"
+                                                    id="formFile"
+                                                />
+                                                <button
+                                                    className="btn btn-primary mt-3"
+                                                    name="action"
+                                                    onClick={handleUploadClick}
+                                                >
+                                                    Upload Image
+                                                </button>
+                                            </>
+                                        )}
                                     </div>
                                 </div>
                                 <div className="col">
-                                    <div className="mb-3 row d-flex justify-content-center">
-                                        <label
-                                            htmlFor="Title"
-                                            className="form-label"
+                                    <fetcher.Form
+                                        method="POST"
+                                        action={`/dashboard/modal/${params.id}`}
+                                    >
+                                        <div className="mb-3 row d-flex justify-content-center">
+                                            <label
+                                                htmlFor="Title"
+                                                className="form-label"
+                                            >
+                                                Title*
+                                            </label>
+                                            <input
+                                                type="text"
+                                                name="title"
+                                                className="form-control"
+                                                id="Title"
+                                                placeholder="Write a title"
+                                            />
+                                        </div>
+                                        <div className="mb-3 row  d-flex justify-content-center">
+                                            <label
+                                                htmlFor="Description"
+                                                className="form-label"
+                                            >
+                                                Description*
+                                            </label>
+                                            <textarea
+                                                className="form-control"
+                                                id="Description"
+                                                name="description"
+                                                rows={3}
+                                            ></textarea>
+                                        </div>
+                                        <button
+                                            type="submit"
+                                            disabled={fetcher.state != 'idle'}
+                                            className="btn btn-primary"
                                         >
-                                            Title*
-                                        </label>
-                                        <input
-                                            type="email"
-                                            className="form-control"
-                                            id="Title"
-                                            placeholder="Write a title"
-                                        />
-                                    </div>
-                                    <div className="mb-3 row  d-flex justify-content-center">
-                                        <label
-                                            htmlFor="Description"
-                                            className="form-label"
-                                        >
-                                            Description*
-                                        </label>
-                                        <textarea
-                                            className="form-control"
-                                            id="Description"
-                                            rows={3}
-                                        ></textarea>
-                                    </div>
-                                    <button className="btn btn-primary">
-                                        Add post
-                                    </button>
+                                            {fetcher.state == 'idle'
+                                                ? 'Update post'
+                                                : 'Updating...'}
+                                        </button>
+                                    </fetcher.Form>
                                 </div>
                             </div>
                         </div>

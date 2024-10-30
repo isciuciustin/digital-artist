@@ -25,9 +25,9 @@ export class PostController {
         return this.postService.findAll();
     }
 
-    @Get(':id')
+    @Get('/get_post/:id')
     findOne(@Param('id') id: string) {
-        return this.postService.findOne(+id);
+        return this.postService.findOne(Number(id));
     }
 
     @Patch('/add_image_key/:id/:image_key')
@@ -35,6 +35,14 @@ export class PostController {
         return this.postService.add_image_key(id, image_key);
     }
 
+    @Patch('/add_post/:id/:title/:description')
+    update_post(
+        @Param('id') id: string,
+        @Param('title') title: string,
+        @Param('description') description: string
+    ) {
+        return this.postService.update_post(id, title, description);
+    }
     @Delete(':id')
     remove(@Param('id') id: string) {
         return this.postService.remove(+id);
