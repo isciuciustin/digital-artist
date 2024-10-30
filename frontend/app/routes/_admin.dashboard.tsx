@@ -99,10 +99,7 @@ export default function Dashboard() {
                 </button>
             </Form>
             <div className="container-fluid mt-5 me-2 ms-2 ">
-                <div
-                    className="w-100 h-100 row row-cols-1 row-cols-sm-2 row-cols-md-3 mt-3 md:gap-3"
-                    style={{ maxHeight: '200px' }}
-                >
+                <div className="w-100 h-100 row row-cols-1 row-cols-sm-2 row-cols-md-3 mt-3 md:gap-3">
                     {Array.isArray(loader.posts) &&
                         loader.posts.map((post: Post) => {
                             return (
