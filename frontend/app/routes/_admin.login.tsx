@@ -34,6 +34,7 @@ export async function action({ request }: ActionFunctionArgs) {
     if (data.message == 'LOGIN FAILED') {
         errors['login_error'] = 'Username or password incorrect!';
     }
+
     if (errors.password || errors.login_error) {
         return json({ errors });
     }
