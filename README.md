@@ -1,1 +1,1 @@
-# This is a website for a digital artist
+# This is wonderful website for a digital artist
