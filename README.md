@@ -5,9 +5,9 @@
     MySQL Server - My version is : Ver 9.0.1 for macos14 on arm64 (MySQL Community Server - GPL)
     Insert the queries from database.sql into your MYSQL server
 
-## The only accepted extensions for images are png & jpg
+### The only accepted extensions for images are png & jpg
 
-## I wanted to add the authentication system but because I am new to the Nest JS ecosystem I didn't have time until now, the login page is just a simple check for password
+### I wanted to add the authentication system but because I am new to the Nest JS ecosystem I didn't have time until now, the login page is just a simple check for password
 
 ## Startup:
 
