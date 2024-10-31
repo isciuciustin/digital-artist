@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { ProjectService } from './project.service';
 import { CreateProjectDto } from './dto/create-project.dto';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('projects')
 export class ProjectController {
@@ -19,6 +20,7 @@ export class ProjectController {
         return this.projectService.create(createProjectDto);
     }
 
+    @Public()
     @Get('/get_projects')
     findAll() {
         return this.projectService.findAll();
