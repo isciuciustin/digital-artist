@@ -1,5 +1,6 @@
 CREATE DATABASE IF NOT EXISTS digital_artist;
 USE digital_artist;
+
 CREATE TABLE users(
     id int NOT NULL AUTO_INCREMENT,
     username VARCHAR(250),

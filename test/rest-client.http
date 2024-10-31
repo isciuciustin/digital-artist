@@ -45,7 +45,7 @@ Content-Type: application/json
     "hidden": true
 }
 
-### GET PROJECT
+### GET PROJECTS
 GET http://localhost:3000/projects/get_projects
 Content-Type: application/json
 
@@ -56,7 +56,7 @@ Content-Type: application/json
 }
 
 
-### GET PROJECT
+### GET PROJECTS NON HIDDEN
 GET http://localhost:3000/projects/get_projects_non_hidden
 Content-Type: application/json
 
