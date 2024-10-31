@@ -1,21 +1,25 @@
 # This is wonderful website for a digital artist
 
-## Requirements: 
+## Requirements:
 
     MySQL Server - My version is : Ver 9.0.1 for macos14 on arm64 (MySQL Community Server - GPL)
     Insert the queries from database.sql into your MYSQL server
 
-## Startup: 
+## The only accepted extensions for images are png & jpg
 
-    cd frontend/ 
+## I wanted to add the authentication system but because I am new to the Nest JS ecosystem I didn't have time until now, the login page is just a simple check for password
+
+## Startup:
+
+    cd frontend/
     npm install postcss-load-config postcss -D postcss-discard-duplicates
     npm run dev
 
-    cd .. 
+    cd ..
     cd backend/
     npm i typeorm
     npm start
-    
+
     touch .env
 
     Add the following env variables inside your .env file

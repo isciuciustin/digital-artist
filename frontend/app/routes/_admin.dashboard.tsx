@@ -202,6 +202,7 @@ export default function Dashboard() {
 
                                                 <input
                                                     onChange={handleFileChange}
+                                                    accept="image/png,  image/jpeg"
                                                     className="form-control"
                                                     type="file"
                                                     id="formFile"
@@ -228,6 +229,7 @@ export default function Dashboard() {
                                                     className="form-control"
                                                     type="file"
                                                     id="formFile"
+                                                    accept="image/png,  image/jpeg"
                                                 />
                                                 <button
                                                     className="btn btn-primary mt-3"
