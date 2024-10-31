@@ -14,7 +14,8 @@
     cd .. 
     cd backend/
     npm i typeorm
-
+    npm start
+    
     touch .env
 
     Add the following env variables inside your .env file
