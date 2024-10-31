@@ -9,6 +9,8 @@
 
 ### I wanted to add the authentication system but because I am new to the Nest JS ecosystem I didn't have time until now, the login page is just a simple check for password
 
+# THE UNHASHED PASSWORD IS : KLEM812pnd!
+
 ## Startup:
 
     cd frontend/
