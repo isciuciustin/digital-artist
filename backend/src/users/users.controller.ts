@@ -36,20 +36,20 @@ export class UsersController {
         };
     }
 
-    @Post('/login')
-    async readUser(@Body() body: UsersDTO) {
-        const data = await this.usersService.read(body.username, body.password);
-        if (data != null) {
-            return {
-                statusCode: HttpStatus.OK,
-                message: 'LOGIN SUCCESSFUL'
-            };
-        } else
-            return {
-                statusCode: HttpStatus.OK,
-                message: 'LOGIN FAILED'
-            };
-    }
+    // @Post('/login')
+    // async readUser(@Body() body: UsersDTO) {
+    //     const data = await this.usersService.read(body.username, body.password);
+    //     if (data != null) {
+    //         return {
+    //             statusCode: HttpStatus.OK,
+    //             message: 'LOGIN SUCCESSFUL'
+    //         };
+    //     } else
+    //         return {
+    //             statusCode: HttpStatus.OK,
+    //             message: 'LOGIN FAILED'
+    //         };
+    // }
 
     @Delete(':id')
     async deleteUser(@Param('id') id: number) {

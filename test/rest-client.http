@@ -67,3 +67,23 @@ Content-Type: application/json
 
 ### DELETE PROJECT
 DELETE  http://localhost:3000/projects/delete_project/115
+
+
+### LOGIN
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "f5bd2911609a9515c25a2d0cf601453b0929e06edbb5d16e3c6eeb8f3bdda54c"
+}
+
+
+### LOGIN
+GET http://localhost:3000/auth/profile
+Content-Type: application/json
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MzAzOTIwOTgsImV4cCI6MTczMDM5MzA5OH0.eos62XyMMFjJniWKj4QEw2BZJOKa5Jk4iD01WmCGMAY
+
+{
+  
+}
