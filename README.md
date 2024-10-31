@@ -7,23 +7,23 @@
 
 ## Startup: 
 
-cd frontend/ 
-npm install postcss-load-config postcss -D postcss-discard-duplicates
-npm run dev
+    cd frontend/ 
+    npm install postcss-load-config postcss -D postcss-discard-duplicates
+    npm run dev
 
-cd .. 
-cd backend/
-npm i typeorm
+    cd .. 
+    cd backend/
+    npm i typeorm
 
-touch .env
+    touch .env
 
-Add the following env variables inside your .env file
+    Add the following env variables inside your .env file
 
-MYSQL_PASSWORD="YOUR MYSQL SERVER PASSWORD"
-MYSQL_DATABASE="digital_artist"
-MYSQL_PORT="3306"
-MYSQL_HOST="localhost"
-MYSQL_USERNAME="root"
+    MYSQL_PASSWORD="YOUR MYSQL SERVER PASSWORD"
+    MYSQL_DATABASE="digital_artist"
+    MYSQL_PORT="3306"
+    MYSQL_HOST="localhost"
+    MYSQL_USERNAME="root"
 
 ## I have a demo video of the app inside video folder
 
