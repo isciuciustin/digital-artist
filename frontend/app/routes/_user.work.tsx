@@ -33,6 +33,7 @@ interface Project {
     title: string;
     description: string;
     image_key: string;
+    customer_link: string;
 }
 interface Loader {
     projects: Array<Project>;
@@ -42,6 +43,7 @@ export default function Work() {
     const [image, setImage] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [customer_link, set_customer_link] = useState('');
     return (
         <div>
             <div className="container-fluid mt-5 me-2 ms-2 ">
@@ -67,7 +69,9 @@ export default function Work() {
                                         );
                                         setTitle(project.title);
                                         setDescription(project.description);
-                                        // navigate(`/dashboard/modal/${project.id}`);
+                                        set_customer_link(
+                                            project.customer_link
+                                        );
                                     }}
                                 >
                                     <img
@@ -120,8 +124,24 @@ export default function Work() {
                                 />
                             </div>
                         </div>
-                        <div className="modal-footer d-flex justify-content-center">
-                            <p>{description}</p>
+                        <div className="modal-footer ">
+                            <div className="col">
+                                <div className="row">
+                                    <p className=" d-flex justify-content-center">
+                                        {description}
+                                    </p>
+                                </div>
+                                <div className="row">
+                                    <a
+                                        target="_blank"
+                                        className=" d-flex justify-content-center"
+                                        rel="noreferrer"
+                                        href={customer_link}
+                                    >
+                                        Customer Website
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

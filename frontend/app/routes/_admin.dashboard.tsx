@@ -172,6 +172,8 @@ export default function Dashboard() {
                                     setImage('');
                                     setTitle('');
                                     setDescription('');
+                                    set_customer_link('');
+                                    setHidden(false);
                                     navigate('/dashboard');
                                 }}
                                 type="button"
@@ -344,6 +346,8 @@ export default function Dashboard() {
                                         setImage('');
                                         setTitle('');
                                         setDescription('');
+                                        setHidden(false);
+                                        set_customer_link('');
                                     }}
                                     data-bs-dismiss="modal"
                                     aria-label="Close"
