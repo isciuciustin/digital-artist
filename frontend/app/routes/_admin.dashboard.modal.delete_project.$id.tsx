@@ -1,12 +1,18 @@
 import { ActionFunctionArgs, redirect } from '@remix-run/node';
+import Authentication from '~/functions/Authentication';
 
-export const action = async ({ params }: ActionFunctionArgs) => {
-    const add_project = await fetch(
+export const action = async ({ params, request }: ActionFunctionArgs) => {
+    const access_token = await Authentication(request);
+    let delete_project = await fetch(
         `http://localhost:3000/projects/delete_project/${params.id}/`,
         {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + access_token
+            }
         }
     );
-    const jsonData = await add_project.json();
+    await delete_project.json();
     return redirect('/dashboard');
 };
