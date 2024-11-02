@@ -1,3 +1,4 @@
+import { LoaderFunctionArgs } from '@remix-run/node';
 import {
     Form,
     json,
@@ -8,8 +9,23 @@ import {
     useParams
 } from '@remix-run/react';
 import { ChangeEvent, useState } from 'react';
+import { accessToken } from '~/cookies.server';
+import Authentication from '~/functions/Authentication';
 
-export async function loader() {
+export async function loader({ request }: LoaderFunctionArgs) {
+    const access_token = await Authentication(request);
+    // const cookieHeader = request.headers.get('Cookie');
+    // const cookie = (await accessToken.parse(cookieHeader)) || {};
+    // console.log('ACCESS TOKEN : ', cookie.access_token);
+    // return null;
+    try {
+        const access_token = await Authentication(request);
+        console.log('ACCESS TOKEN ', access_token);
+    } catch (err) {
+        console.log('ERR : ', await err);
+    } finally {
+        return null;
+    }
     const get_projects = await fetch(
         `http://localhost:3000/projects/get_projects`,
         {
@@ -51,6 +67,7 @@ interface Loader {
 }
 
 export default function Dashboard() {
+    return <div></div>;
     const params = useParams();
     const fetcher = useFetcher();
     const navigate = useNavigate();

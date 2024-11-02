@@ -28,7 +28,7 @@ export async function action({ request }: ActionFunctionArgs) {
     const refresh_token_cookie = (await refreshToken.parse(cookieHeader)) || {};
 
     const data = await response.json();
-
+    console.log('DATA : ', data);
     access_token_cookie.access_token = data.access_token;
     refresh_token_cookie.refresh_token = data.refresh_token;
 
