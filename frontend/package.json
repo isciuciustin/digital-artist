@@ -16,8 +16,6 @@
         "@remix-run/serve": "^2.13.1",
         "crypto-js": "^4.2.0",
         "isbot": "^4.1.0",
-        "postcss-discard-duplicates": "^7.0.1",
-        "postcss-load-config": "^6.0.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "remix": "^2.13.1"
@@ -36,6 +34,8 @@
         "eslint-plugin-react": "^7.33.2",
         "eslint-plugin-react-hooks": "^4.6.0",
         "postcss": "^8.4.47",
+        "postcss-discard-duplicates": "^7.0.1",
+        "postcss-load-config": "^6.0.1",
         "postcss-modules": "^6.0.0",
         "projectcss": "^8.4.38",
         "typescript": "^5.1.6",

@@ -14,12 +14,11 @@ export class AuthService {
         if (user != null) {
             const payload = { sub: user.id, username: user.username };
             return {
-                access_token: await this.jwtService.signAsync(payload)
+                access_token: await this.jwtService.signAsync(payload),
+                refresh_token: await this.jwtService.signAsync(payload, {
+                    expiresIn: '30d'
+                })
             };
-            // return {
-            //     statusCode: HttpStatus.OK,
-            //     message: 'LOGIN SUCCESSFUL'
-            // };
         } else
             return {
                 statusCode: HttpStatus.OK,
