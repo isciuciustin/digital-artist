@@ -1,7 +1,7 @@
 import { ActionFunctionArgs } from '@remix-run/node';
 import { Form, json, redirect, useActionData } from '@remix-run/react';
 import CryptoJS from 'crypto-js';
-import { accessToken, refreshToken } from '~/cookies.server';
+import { accessToken, refreshToken, userInfo } from '~/cookies.server';
 
 export async function action({ request }: ActionFunctionArgs) {
     const cookieHeader = request.headers.get('Cookie');
@@ -26,13 +26,14 @@ export async function action({ request }: ActionFunctionArgs) {
 
     const access_token_cookie = (await accessToken.parse(cookieHeader)) || {};
     const refresh_token_cookie = (await refreshToken.parse(cookieHeader)) || {};
+    const user_info_token_cookie =
+        (await accessToken.parse(cookieHeader)) || {};
 
     const data = await response.json();
 
     access_token_cookie.access_token = data.access_token;
     refresh_token_cookie.refresh_token = data.refresh_token;
-    refresh_token_cookie.user_id = data.user_id;
-    refresh_token_cookie.username = data.username;
+    user_info_token_cookie.user_info = data.user_id + '_' + data.username;
 
     const headers = new Headers();
 
@@ -43,6 +44,10 @@ export async function action({ request }: ActionFunctionArgs) {
     headers.append(
         'Set-Cookie',
         await refreshToken.serialize(refresh_token_cookie)
+    );
+    headers.append(
+        'Set-Cookie',
+        await userInfo.serialize(user_info_token_cookie)
     );
 
     const errors = {

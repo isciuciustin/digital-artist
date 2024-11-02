@@ -1,14 +1,16 @@
 import { redirect } from '@remix-run/node';
-import { accessToken, refreshToken } from '~/cookies.server';
+import { accessToken, refreshToken, userInfo } from '~/cookies.server';
 
 export default async function Authentication(request: Request) {
     const cookieHeader = request.headers.get('Cookie');
     const access_token_cookie = (await accessToken.parse(cookieHeader)) || {};
     const refresh_token_cookie = (await refreshToken.parse(cookieHeader)) || {};
+    const user_info_token_cookie = (await userInfo.parse(cookieHeader)) || {};
 
     if (
         typeof access_token_cookie.access_token !== 'string' ||
-        typeof refresh_token_cookie.refresh_token !== 'string'
+        typeof refresh_token_cookie.refresh_token !== 'string' ||
+        typeof user_info_token_cookie.user_info !== 'string'
     )
         throw redirect('/login');
 
@@ -33,8 +35,8 @@ export default async function Authentication(request: Request) {
                 Authorization: 'Bearer ' + refresh_token_cookie.refresh_token
             },
             body: JSON.stringify({
-                user_id: refresh_token_cookie.user_id,
-                username: refresh_token_cookie.username
+                user_id: Number(user_info_token_cookie.user_info.split('_')[0]),
+                username: user_info_token_cookie.user_info.split('_')[1]
             })
         });
         get_tokens = await get_tokens.json();

@@ -79,18 +79,25 @@ Content-Type: application/json
 }
 
 
-### LOGIN
+### VERIFY TOKEN
 GET http://localhost:3000/auth/verify_token
 Content-Type: application/json
-Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MzA1NDU4MTEsImV4cCI6MTczMDU0NjgxMX0.R-mSaQcK36_AOf5MH_KlqQs75d0DODjVYTZ-Cz4FPHQ
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MzA1NzAzODUsImV4cCI6MTczMDY1Njc4NX0.uGO-CkJuGx4AnGVxl9auCCEdon9hOVle13n5alTI33w
 
 
 ### GET TOKENS
 POST http://localhost:3000/auth/get_tokens
 Content-Type: application/json
-Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MzA1NDU4MTEsImV4cCI6MTczMDU0NjgxMX0.R-mSaQcK36_AOf5MH_KlqQs75d0DODjVYTZ-Cz4FPHQ
+Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MzA1NzAzODUsImV4cCI6MTczMDY1Njc4NX0.uGO-CkJuGx4AnGVxl9auCCEdon9hOVle13n5alTI33w
 
 {
     "user_id" : 6,
     "username": "admin"
+}
+
+### UPLOAD FILE 
+POST http://localhost:3000/file-upload/upload
+
+{
+   <CEERVE>
 }

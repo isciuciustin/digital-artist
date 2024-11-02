@@ -25,7 +25,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
         }
     );
     get_projects = await get_projects.json();
-    console.log('GET PROJECTS : ', get_projects);
     return json({ projects: get_projects });
 }
 
@@ -86,8 +85,10 @@ export default function Dashboard() {
         if (!file) {
             return;
         }
+
         const formData = new FormData();
         formData.append('file', file, file.name);
+
         const send_response = await fetch(
             'http://localhost:3000/file-upload/upload',
             {
@@ -95,6 +96,7 @@ export default function Dashboard() {
                 body: formData
             }
         );
+
         let json = await send_response.json();
         const add_image_key = await fetch(
             `http://localhost:3000/projects/add_image_key/${params.id}/${
