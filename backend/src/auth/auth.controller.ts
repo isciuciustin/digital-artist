@@ -24,8 +24,19 @@ export class AuthController {
     }
 
     @UseGuards(AuthGuard)
-    @Get('profile')
+    @Get('verify_token')
     getProfile() {
-        return 'SUCCSESS!';
+        return {
+            isValid: 'TOKEN_IS_VALID'
+        };
+    }
+
+    @UseGuards(AuthGuard)
+    @Post('get_tokens')
+    refreshTokens(@Body() refreshTokensDto: Record<string, any>) {
+        return this.authService.refreshTokens(
+            refreshTokensDto.user_id,
+            refreshTokensDto.username
+        );
     }
 }

@@ -80,10 +80,17 @@ Content-Type: application/json
 
 
 ### LOGIN
-GET http://localhost:3000/auth/profile
+GET http://localhost:3000/auth/verify_token
 Content-Type: application/json
-Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MzAzOTIwOTgsImV4cCI6MTczMDM5MzA5OH0.eos62XyMMFjJniWKj4QEw2BZJOKa5Jk4iD01WmCGMAY
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MzA1NDU4MTEsImV4cCI6MTczMDU0NjgxMX0.R-mSaQcK36_AOf5MH_KlqQs75d0DODjVYTZ-Cz4FPHQ
+
+
+### GET TOKENS
+POST http://localhost:3000/auth/get_tokens
+Content-Type: application/json
+Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MzA1NDU4MTEsImV4cCI6MTczMDU0NjgxMX0.R-mSaQcK36_AOf5MH_KlqQs75d0DODjVYTZ-Cz4FPHQ
 
 {
-  
+    "user_id" : 6,
+    "username": "admin"
 }

@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs } from '@remix-run/node';
+import { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
 import {
     Form,
     json,
@@ -9,38 +9,36 @@ import {
     useParams
 } from '@remix-run/react';
 import { ChangeEvent, useState } from 'react';
-import { accessToken } from '~/cookies.server';
 import Authentication from '~/functions/Authentication';
 
 export async function loader({ request }: LoaderFunctionArgs) {
     const access_token = await Authentication(request);
-    // const cookieHeader = request.headers.get('Cookie');
-    // const cookie = (await accessToken.parse(cookieHeader)) || {};
-    // console.log('ACCESS TOKEN : ', cookie.access_token);
-    // return null;
-    try {
-        const access_token = await Authentication(request);
-        console.log('ACCESS TOKEN ', access_token);
-    } catch (err) {
-        console.log('ERR : ', await err);
-    } finally {
-        return null;
-    }
-    const get_projects = await fetch(
+
+    let get_projects = await fetch(
         `http://localhost:3000/projects/get_projects`,
         {
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + access_token
+            }
         }
     );
-    const jsonData = await get_projects.json();
-    return json({ projects: jsonData });
+    get_projects = await get_projects.json();
+    console.log('GET PROJECTS : ', get_projects);
+    return json({ projects: get_projects });
 }
 
-export const action = async () => {
-    const add_project = await fetch(
+export const action = async ({ request }: ActionFunctionArgs) => {
+    const access_token = await Authentication(request);
+    let add_project = await fetch(
         `http://localhost:3000/projects/add_project`,
         {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + access_token
+            },
             body: JSON.stringify({
                 title: '',
                 description: '',
@@ -50,8 +48,8 @@ export const action = async () => {
             })
         }
     );
-    const jsonData = await add_project.json();
-    return redirect(`/dashboard/modal/${jsonData.id}`);
+    add_project = await add_project.json();
+    return redirect(`/dashboard/modal/${add_project?.id}`);
 };
 
 interface Project {
@@ -67,7 +65,6 @@ interface Loader {
 }
 
 export default function Dashboard() {
-    return <div></div>;
     const params = useParams();
     const fetcher = useFetcher();
     const navigate = useNavigate();

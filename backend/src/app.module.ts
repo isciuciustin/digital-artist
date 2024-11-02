@@ -15,7 +15,7 @@ import { JwtModule } from '@nestjs/jwt';
         JwtModule.register({
             global: true,
             secret: process.env.SECRET,
-            signOptions: { expiresIn: '1000s' }
+            signOptions: { expiresIn: '10s' }
         }),
         TypeOrmModule.forRoot({
             type: 'mysql',

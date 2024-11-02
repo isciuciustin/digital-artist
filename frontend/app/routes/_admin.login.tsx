@@ -28,11 +28,14 @@ export async function action({ request }: ActionFunctionArgs) {
     const refresh_token_cookie = (await refreshToken.parse(cookieHeader)) || {};
 
     const data = await response.json();
-    console.log('DATA : ', data);
+
     access_token_cookie.access_token = data.access_token;
     refresh_token_cookie.refresh_token = data.refresh_token;
+    refresh_token_cookie.user_id = data.user_id;
+    refresh_token_cookie.username = data.username;
 
     const headers = new Headers();
+
     headers.append(
         'Set-Cookie',
         await accessToken.serialize(access_token_cookie)
@@ -41,6 +44,7 @@ export async function action({ request }: ActionFunctionArgs) {
         'Set-Cookie',
         await refreshToken.serialize(refresh_token_cookie)
     );
+
     const errors = {
         password: '',
         login_error: ''

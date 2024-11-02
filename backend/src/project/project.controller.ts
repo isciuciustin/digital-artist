@@ -20,12 +20,12 @@ export class ProjectController {
         return this.projectService.create(createProjectDto);
     }
 
-    @Public()
     @Get('/get_projects')
     findAll() {
         return this.projectService.findAll();
     }
 
+    @Public()
     @Get('/get_projects_non_hidden')
     findNonHidden() {
         return this.projectService.findNonHidden();

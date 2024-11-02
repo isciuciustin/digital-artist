@@ -17,12 +17,26 @@ export class AuthService {
                 access_token: await this.jwtService.signAsync(payload),
                 refresh_token: await this.jwtService.signAsync(payload, {
                     expiresIn: '30d'
-                })
+                }),
+                user_id: user.id,
+                username: user.username
             };
         } else
             return {
                 statusCode: HttpStatus.OK,
                 message: 'LOGIN FAILED'
             };
+    }
+    async refreshTokens(user_id: string, username: string): Promise<any> {
+        const payload = { sub: user_id, username: username };
+
+        return {
+            access_token: await this.jwtService.signAsync(payload),
+            refresh_token: await this.jwtService.signAsync(payload, {
+                expiresIn: '30d'
+            }),
+            user_id: user_id,
+            username: username
+        };
     }
 }
