@@ -11,6 +11,8 @@
 
 # THE UNHASHED PASSWORD IS : KLEM812pnd!
 
+## UPDATE ( 03.11.2024 ) During this weekend I added the auth system and also the functionality for removing the files, it is available on 'auth' branch!
+
 ## Startup:
 
     cd frontend/
