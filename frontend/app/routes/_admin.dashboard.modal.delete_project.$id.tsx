@@ -3,7 +3,7 @@ import Authentication from '~/functions/Authentication';
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {
     const access_token = await Authentication(request, 'action');
-    let delete_project = await fetch(
+    const delete_project = await fetch(
         `http://localhost:3000/projects/delete_project/${params.id}/`,
         {
             method: 'DELETE',

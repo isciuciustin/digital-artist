@@ -5,6 +5,8 @@ import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Module({
     imports: [
@@ -23,6 +25,12 @@ import { join } from 'path';
         })
     ],
     controllers: [FileUploadController],
-    providers: [FileUploadService]
+    providers: [
+        FileUploadService,
+        {
+            provide: APP_GUARD,
+            useClass: AuthGuard
+        }
+    ]
 })
 export class FileUploadModule {}

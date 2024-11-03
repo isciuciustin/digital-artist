@@ -26,7 +26,7 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
         }
     );
     add_project = await add_project.json();
-
+    console.log('ADD PROJECT RESPONSE : ', add_project);
     return null;
 };
 

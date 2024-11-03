@@ -1,5 +1,8 @@
 ### GET users
 GET http://localhost:3000/users
+Content-Type: application/json
+Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MzA2NDEzODIsImV4cCI6MTczMDcyNzc4Mn0.GkB60p76oW4ssAwz1yeEJA5CvIwb49_z8yy9xL4ABd8
+
 
 ### DELETE USER
 DELETE http://localhost:3000/users/5

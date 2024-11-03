@@ -5,10 +5,11 @@ import {
     redirect,
     useFetcher,
     useLoaderData,
+    useLocation,
     useNavigate,
     useParams
 } from '@remix-run/react';
-import { ChangeEvent, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Authentication from '~/functions/Authentication';
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -68,49 +69,18 @@ export default function Dashboard() {
     const fetcher = useFetcher();
     const navigate = useNavigate();
     const loader = useLoaderData() as Loader;
+    const location = useLocation();
 
-    const [file, setFile] = useState<File>();
-    const [image, setImage] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [customer_link, set_customer_link] = useState('');
     const [hidden, setHidden] = useState(false);
-    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            setFile(e.target.files[0]);
-        }
-    };
+    const [image, setImage] = useState('');
 
-    const handleUploadClick = async () => {
-        if (!file) {
-            return;
-        }
+    useEffect(() => {
+        setImage(location.search.split('=')[1]);
+    }, [location.search]);
 
-        const formData = new FormData();
-        formData.append('file', file, file.name);
-
-        const send_response = await fetch(
-            'http://localhost:3000/file-upload/upload',
-            {
-                method: 'POST',
-                body: formData
-            }
-        );
-
-        let json = await send_response.json();
-        const add_image_key = await fetch(
-            `http://localhost:3000/projects/add_image_key/${params.id}/${
-                json.filePath.split('/')[1]
-            }`,
-            {
-                method: 'PATCH'
-            }
-        );
-        setImage(
-            'http://localhost:3000/uploads/' + json.filePath.split('/')[1]
-        );
-        json = await add_image_key.json();
-    };
     return (
         <div>
             <Form
@@ -140,17 +110,17 @@ export default function Dashboard() {
                                         backgroundColor: 'transparent'
                                     }}
                                     onClick={() => {
-                                        setImage(
-                                            `http://localhost:3000/uploads/${project.image_key}`
-                                        );
                                         setTitle(project.title);
                                         setDescription(project.description);
                                         set_customer_link(
                                             project.customer_link
                                         );
                                         setHidden(project.hidden);
+                                        setImage(
+                                            `uploads/${project.image_key}`
+                                        );
                                         navigate(
-                                            `/dashboard/modal/${project.id}`
+                                            `/dashboard/modal/${project.id}?image_path=uploads/${project.image_key}`
                                         );
                                     }}
                                 >
@@ -185,7 +155,6 @@ export default function Dashboard() {
                             </h5>
                             <button
                                 onClick={() => {
-                                    setImage('');
                                     setTitle('');
                                     setDescription('');
                                     set_customer_link('');
@@ -204,56 +173,66 @@ export default function Dashboard() {
                                     <div className="mb-3">
                                         {image ? (
                                             <>
-                                                <img
-                                                    className="img-fluid w-100"
-                                                    alt=""
-                                                    src={image}
-                                                />
-                                                <label
-                                                    htmlFor="formFile"
-                                                    className="form-label"
+                                                <Form
+                                                    method="POST"
+                                                    encType="multipart/form-data"
+                                                    action={`/dashboard/modal/upload_file/${params.id}`}
                                                 >
-                                                    Upload another image
-                                                </label>
+                                                    <img
+                                                        className="img-fluid w-100"
+                                                        alt=""
+                                                        src={`http://localhost:3000/${image}`}
+                                                    />
+                                                    <label
+                                                        htmlFor="formFile2"
+                                                        className="form-label"
+                                                    >
+                                                        Upload another image
+                                                    </label>
 
-                                                <input
-                                                    onChange={handleFileChange}
-                                                    accept="image/png,  image/jpeg"
-                                                    className="form-control"
-                                                    type="file"
-                                                    id="formFile"
-                                                />
-                                                <button
-                                                    className="btn btn-primary mt-3"
-                                                    name="action"
-                                                    onClick={handleUploadClick}
-                                                >
-                                                    Change Image
-                                                </button>
+                                                    <input
+                                                        accept="image/png,  image/jpeg"
+                                                        className="form-control"
+                                                        type="file"
+                                                        id="formFile2"
+                                                        name="image"
+                                                    />
+                                                    <button
+                                                        className="btn btn-primary mt-3"
+                                                        type="submit"
+                                                    >
+                                                        Change Image
+                                                    </button>
+                                                </Form>
                                             </>
                                         ) : (
                                             <>
-                                                <label
-                                                    htmlFor="formFile"
-                                                    className="form-label"
+                                                <fetcher.Form
+                                                    method="POST"
+                                                    encType="multipart/form-data"
+                                                    action={`/dashboard/modal/upload_file/${params.id}`}
                                                 >
-                                                    Upload an image
-                                                </label>
+                                                    <label
+                                                        htmlFor="formFile"
+                                                        className="form-label"
+                                                    >
+                                                        Upload an image
+                                                    </label>
 
-                                                <input
-                                                    onChange={handleFileChange}
-                                                    className="form-control"
-                                                    type="file"
-                                                    id="formFile"
-                                                    accept="image/png,  image/jpeg"
-                                                />
-                                                <button
-                                                    className="btn btn-primary mt-3"
-                                                    name="action"
-                                                    onClick={handleUploadClick}
-                                                >
-                                                    Upload Image
-                                                </button>
+                                                    <input
+                                                        className="form-control"
+                                                        type="file"
+                                                        id="formFile"
+                                                        accept="image/png,image/jpeg"
+                                                        name="image"
+                                                    />
+                                                    <button
+                                                        className="btn btn-primary mt-3"
+                                                        type="submit"
+                                                    >
+                                                        Upload Image
+                                                    </button>
+                                                </fetcher.Form>
                                             </>
                                         )}
                                     </div>
@@ -361,7 +340,6 @@ export default function Dashboard() {
                             >
                                 <button
                                     onClick={() => {
-                                        setImage('');
                                         setTitle('');
                                         setDescription('');
                                         setHidden(false);
