@@ -2,6 +2,7 @@ import { redirect } from '@remix-run/node';
 import { accessToken, refreshToken, userInfo } from '~/cookies.server';
 
 export default async function Authentication(request: Request) {
+    // console.log('REQUEST : ', request);
     const cookieHeader = request.headers.get('Cookie');
     const access_token_cookie = (await accessToken.parse(cookieHeader)) || {};
     const refresh_token_cookie = (await refreshToken.parse(cookieHeader)) || {};
@@ -11,8 +12,9 @@ export default async function Authentication(request: Request) {
         typeof access_token_cookie.access_token !== 'string' ||
         typeof refresh_token_cookie.refresh_token !== 'string' ||
         typeof user_info_token_cookie.user_info !== 'string'
-    )
+    ) {
         throw redirect('/login');
+    }
 
     let verify_access_token = await fetch(
         `http://localhost:3000/auth/verify_token`,

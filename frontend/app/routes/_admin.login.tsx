@@ -31,6 +31,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
     const data = await response.json();
 
+    console.log('DATA : ', data);
     access_token_cookie.access_token = data.access_token;
     refresh_token_cookie.refresh_token = data.refresh_token;
     user_info_token_cookie.user_info = data.user_id + '_' + data.username;
@@ -66,6 +67,8 @@ export async function action({ request }: ActionFunctionArgs) {
     if (errors.password || errors.login_error) {
         return json({ errors });
     }
+
+    console.log('HEADERS : ', headers);
 
     return redirect('/dashboard', { headers: headers });
 }

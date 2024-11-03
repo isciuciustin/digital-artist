@@ -16,7 +16,8 @@ export class AuthService {
             return {
                 access_token: await this.jwtService.signAsync(payload),
                 refresh_token: await this.jwtService.signAsync(payload, {
-                    expiresIn: '30d'
+                    expiresIn: '30d',
+                    secret: process.env.SECRET
                 }),
                 user_id: user.id,
                 username: user.username
@@ -33,7 +34,8 @@ export class AuthService {
         return {
             access_token: await this.jwtService.signAsync(payload),
             refresh_token: await this.jwtService.signAsync(payload, {
-                expiresIn: '30d'
+                expiresIn: '30d',
+                secret: process.env.SECRET
             }),
             user_id: user_id,
             username: username
