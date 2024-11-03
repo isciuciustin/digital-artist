@@ -2,7 +2,7 @@ import { ActionFunctionArgs } from '@remix-run/node';
 import Authentication from '~/functions/Authentication';
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
-    const access_token = await Authentication(request);
+    const access_token = await Authentication(request, 'action');
     const formData = await request.formData();
     const title = formData.get('title');
     const description = formData.get('description');

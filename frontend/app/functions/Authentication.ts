@@ -1,8 +1,7 @@
 import { redirect } from '@remix-run/node';
 import { accessToken, refreshToken, userInfo } from '~/cookies.server';
 
-export default async function Authentication(request: Request) {
-    // console.log('REQUEST : ', request);
+export default async function Authentication(request: Request, type: string) {
     const cookieHeader = request.headers.get('Cookie');
     const access_token_cookie = (await accessToken.parse(cookieHeader)) || {};
     const refresh_token_cookie = (await refreshToken.parse(cookieHeader)) || {};
@@ -54,9 +53,16 @@ export default async function Authentication(request: Request) {
                 'Set-Cookie',
                 await refreshToken.serialize('', { maxAge: -1 })
             );
+            headers.append(
+                'Set-Cookie',
+                await userInfo.serialize('', { maxAge: -1 })
+            );
+
             throw redirect('/login', { headers: headers });
         } else {
             access_token_cookie.access_token = get_tokens.access_token;
+            if (type == 'action') return access_token_cookie.access_token;
+
             refresh_token_cookie.refresh_token = get_tokens.refresh_token;
 
             const headers = new Headers();

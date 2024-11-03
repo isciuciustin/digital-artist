@@ -12,7 +12,7 @@ import { ChangeEvent, useState } from 'react';
 import Authentication from '~/functions/Authentication';
 
 export async function loader({ request }: LoaderFunctionArgs) {
-    const access_token = await Authentication(request);
+    const access_token = await Authentication(request, 'loader');
 
     let get_projects = await fetch(
         `http://localhost:3000/projects/get_projects`,
@@ -29,7 +29,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-    const access_token = await Authentication(request);
+    const access_token = await Authentication(request, 'action');
     let add_project = await fetch(
         `http://localhost:3000/projects/add_project`,
         {
