@@ -10,6 +10,7 @@ import {
 import { ProjectService } from './project.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
+import * as fs from 'fs';
 
 @Controller('projects')
 export class ProjectController {
@@ -37,7 +38,16 @@ export class ProjectController {
     }
 
     @Patch('/add_image_key/:id/:image_key')
-    update(@Param('id') id: string, @Param('image_key') image_key: string) {
+    async update(
+        @Param('id') id: string,
+        @Param('image_key') image_key: string
+    ) {
+        const current_project = await this.projectService.findOne(Number(id));
+
+        if (current_project.image_key != '') {
+            const fullPath = `./uploads/${current_project.image_key}`;
+            const delete_file = await fs.promises.unlink(fullPath);
+        }
         return this.projectService.add_image_key(id, image_key);
     }
 
@@ -56,7 +66,12 @@ export class ProjectController {
     }
 
     @Delete('/delete_project/:id')
-    delete_project(@Param('id') id: string) {
+    async delete_project(@Param('id') id: string) {
+        const current_project = await this.projectService.findOne(Number(id));
+        if (current_project.image_key != '') {
+            const fullPath = `./uploads/${current_project.image_key}`;
+            const delete_file = await fs.promises.unlink(fullPath);
+        }
         return this.projectService.delete_project(Number(id));
     }
 }
