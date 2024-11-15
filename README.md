@@ -9,6 +9,10 @@
 
 ### I wanted to add the authentication system but because I am new to the Nest JS ecosystem I didn't have time until now, the login page is just a simple check for password
 
+# THE UNHASHED PASSWORD IS : KLEM812pnd!
+
+## UPDATE ( 03.11.2024 ) During this weekend I added the auth system and also the functionality for removing the files, it is available on 'auth' branch!
+
 ## Startup:
 
     cd frontend/
