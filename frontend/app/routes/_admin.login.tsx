@@ -1,29 +1,56 @@
 import { ActionFunctionArgs } from '@remix-run/node';
 import { Form, json, redirect, useActionData } from '@remix-run/react';
 import CryptoJS from 'crypto-js';
+import { accessToken, refreshToken, userInfo } from '~/cookies.server';
 
 export async function action({ request }: ActionFunctionArgs) {
+    const cookieHeader = request.headers.get('Cookie');
+
     const formData = await request.formData();
     const username = formData.get('username');
     const password = formData.get('password');
     // HASHING THE PASSWORD
     const hash = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
-    const headers = {
-        'Content-Type': 'application/json'
-    };
-
-    console.log('HASH : ', hash);
 
     const body = JSON.stringify({
         username: username,
         password: hash
     });
-    const response = await fetch(`http://localhost:3000/users/login`, {
+    const response = await fetch(`http://localhost:3000/auth/login`, {
         method: 'POST',
-        headers,
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body
     });
+
+    const access_token_cookie = (await accessToken.parse(cookieHeader)) || {};
+    const refresh_token_cookie = (await refreshToken.parse(cookieHeader)) || {};
+    const user_info_token_cookie =
+        (await accessToken.parse(cookieHeader)) || {};
+
     const data = await response.json();
+
+    console.log('DATA : ', data);
+    access_token_cookie.access_token = data.access_token;
+    refresh_token_cookie.refresh_token = data.refresh_token;
+    user_info_token_cookie.user_info = data.user_id + '_' + data.username;
+
+    const headers = new Headers();
+
+    headers.append(
+        'Set-Cookie',
+        await accessToken.serialize(access_token_cookie)
+    );
+    headers.append(
+        'Set-Cookie',
+        await refreshToken.serialize(refresh_token_cookie)
+    );
+    headers.append(
+        'Set-Cookie',
+        await userInfo.serialize(user_info_token_cookie)
+    );
+
     const errors = {
         password: '',
         login_error: ''
@@ -41,7 +68,9 @@ export async function action({ request }: ActionFunctionArgs) {
         return json({ errors });
     }
 
-    return redirect('/dashboard');
+    console.log('HEADERS : ', headers);
+
+    return redirect('/dashboard', { headers: headers });
 }
 
 export default function Login() {

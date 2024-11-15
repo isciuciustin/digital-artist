@@ -34,7 +34,7 @@
     MYSQL_HOST="localhost"
     MYSQL_USERNAME="root"
     SECRET="THIS IS A SECRET FOR AUTH"
-
+    
 ## I have a demo video of the app inside video folder
 
 ### Have fun!

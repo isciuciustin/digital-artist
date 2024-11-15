@@ -6,10 +6,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { FileUploadModule } from './file-upload/file-upload.module';
 import { ProjectModule } from './project/project.module';
+import { AuthModule } from './auth/auth.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
     imports: [
         ConfigModule.forRoot(),
+        JwtModule.register({
+            global: true,
+            secret: process.env.SECRET,
+            signOptions: { expiresIn: '1d' }
+        }),
         TypeOrmModule.forRoot({
             type: 'mysql',
             host: process.env.MYSQL_HOST,
@@ -23,7 +30,8 @@ import { ProjectModule } from './project/project.module';
         }),
         UsersModule,
         FileUploadModule,
-        ProjectModule
+        ProjectModule,
+        AuthModule
     ],
     controllers: [AppController],
     providers: [AppService]

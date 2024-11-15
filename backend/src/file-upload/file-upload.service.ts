@@ -8,7 +8,7 @@ export class FileUploadService {
         if (!file) {
             throw new BadRequestException('no file uploaded');
         }
-        console.log('FILENAME : ', file);
+
         const maxSize = 100 * 1024 * 1024;
         if (file.size > maxSize) {
             throw new BadRequestException('file is too large!');

@@ -1,5 +1,8 @@
 ### GET users
 GET http://localhost:3000/users
+Content-Type: application/json
+Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MzA2NDEzODIsImV4cCI6MTczMDcyNzc4Mn0.GkB60p76oW4ssAwz1yeEJA5CvIwb49_z8yy9xL4ABd8
+
 
 ### DELETE USER
 DELETE http://localhost:3000/users/5
@@ -67,3 +70,37 @@ Content-Type: application/json
 
 ### DELETE PROJECT
 DELETE  http://localhost:3000/projects/delete_project/115
+
+
+### LOGIN
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "f5bd2911609a9515c25a2d0cf601453b0929e06edbb5d16e3c6eeb8f3bdda54c"
+}
+
+
+### VERIFY TOKEN
+GET http://localhost:3000/auth/verify_token
+Content-Type: application/json
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MzA1NzAzODUsImV4cCI6MTczMDY1Njc4NX0.uGO-CkJuGx4AnGVxl9auCCEdon9hOVle13n5alTI33w
+
+
+### GET TOKENS
+POST http://localhost:3000/auth/get_tokens
+Content-Type: application/json
+Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3MzA1NzAzODUsImV4cCI6MTczMDY1Njc4NX0.uGO-CkJuGx4AnGVxl9auCCEdon9hOVle13n5alTI33w
+
+{
+    "user_id" : 6,
+    "username": "admin"
+}
+
+### UPLOAD FILE 
+POST http://localhost:3000/file-upload/upload
+
+{
+   <CEERVE>
+}

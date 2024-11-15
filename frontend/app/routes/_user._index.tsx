@@ -1,15 +1,22 @@
+import { LoaderFunctionArgs } from '@remix-run/node';
 import { json, useLoaderData } from '@remix-run/react';
+import Authentication from '~/functions/Authentication';
 
-export async function loader() {
-    const get_projects = await fetch(
+export async function loader({ request }: LoaderFunctionArgs) {
+    const access_token = await Authentication(request);
+    let getProjects = await fetch(
         `http://localhost:3000/projects/get_projects_non_hidden`,
         {
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + access_token
+            }
         }
     );
-    const jsonData = await get_projects.json();
-    console.log('json data', jsonData);
-    return json({ projects: jsonData });
+    getProjects = await getProjects.json();
+
+    return json({ projects: getProjects });
 }
 
 interface Project {

@@ -1,18 +1,21 @@
 import { ActionFunctionArgs } from '@remix-run/node';
+import Authentication from '~/functions/Authentication';
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
+    const access_token = await Authentication(request, 'action');
     const formData = await request.formData();
     const title = formData.get('title');
     const description = formData.get('description');
     const hidden = formData.get('hidden') == 'on' ? true : false;
     const customer_link = formData.get('customer_link');
 
-    const add_project = await fetch(
+    let add_project = await fetch(
         `http://localhost:3000/projects/update_project/${params.id}`,
         {
             method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + access_token
             },
             body: JSON.stringify({
                 title: title,
@@ -22,8 +25,8 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
             })
         }
     );
-    const jsonData = await add_project.json();
-
+    add_project = await add_project.json();
+    console.log('ADD PROJECT RESPONSE : ', add_project);
     return null;
 };
 
