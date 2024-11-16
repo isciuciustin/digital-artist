@@ -116,18 +116,16 @@ export default function Dashboard() {
                                             project.customer_link
                                         );
                                         setHidden(project.hidden);
-                                        setImage(
-                                            `uploads/${project.image_key}`
-                                        );
+                                        setImage(`/${project.image_key}`);
                                         navigate(
-                                            `/dashboard/modal/${project.id}?image_path=uploads/${project.image_key}`
+                                            `/dashboard/modal/${project.id}?image_path=/${project.image_key}`
                                         );
                                     }}
                                 >
                                     <img
                                         style={{ objectFit: 'fill' }}
                                         className=" w-100 h-100"
-                                        src={`http://localhost:3000/uploads/${project.image_key}`}
+                                        src={`http://localhost:3000/${project.image_key}`}
                                         alt=""
                                     />
                                 </button>

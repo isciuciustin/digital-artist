@@ -45,7 +45,7 @@ export class ProjectController {
         const current_project = await this.projectService.findOne(Number(id));
 
         if (current_project.image_key != '') {
-            const fullPath = `./uploads/${current_project.image_key}`;
+            const fullPath = `./${current_project.image_key}`;
             const delete_file = await fs.promises.unlink(fullPath);
         }
         return this.projectService.add_image_key(id, image_key);
@@ -69,7 +69,7 @@ export class ProjectController {
     async delete_project(@Param('id') id: string) {
         const current_project = await this.projectService.findOne(Number(id));
         if (current_project.image_key != '') {
-            const fullPath = `./uploads/${current_project.image_key}`;
+            const fullPath = `/${current_project.image_key}`;
             const delete_file = await fs.promises.unlink(fullPath);
         }
         return this.projectService.delete_project(Number(id));

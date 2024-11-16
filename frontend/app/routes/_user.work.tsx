@@ -65,7 +65,7 @@ export default function Work() {
                                     }}
                                     onClick={() => {
                                         setImage(
-                                            `http://localhost:3000/uploads/${project.image_key}`
+                                            `http://localhost:3000/${project.image_key}`
                                         );
                                         setTitle(project.title);
                                         setDescription(project.description);
@@ -77,7 +77,7 @@ export default function Work() {
                                     <img
                                         style={{ objectFit: 'fill' }}
                                         className=" w-100 h-100"
-                                        src={`http://localhost:3000/uploads/${project.image_key}`}
+                                        src={`http://localhost:3000/${project.image_key}`}
                                         alt=""
                                     />
                                 </button>

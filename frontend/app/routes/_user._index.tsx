@@ -73,7 +73,7 @@ export default function Index() {
                             data-bs-interval="2000"
                         >
                             <img
-                                src={`http://localhost:3000/uploads/${loader.projects[0].image_key}`}
+                                src={`http://localhost:3000/${loader.projects[0].image_key}`}
                                 className=" w-100 "
                                 style={{ height: '70vh', objectFit: 'cover' }}
                                 alt=""
@@ -93,7 +93,7 @@ export default function Index() {
                             data-bs-interval="2000"
                         >
                             <img
-                                src={`http://localhost:3000/uploads/${loader.projects[1].image_key}`}
+                                src={`http://localhost:3000${loader.projects[1].image_key}`}
                                 className=" w-100 "
                                 style={{ height: '70vh', objectFit: 'cover' }}
                                 alt=""
@@ -111,7 +111,7 @@ export default function Index() {
                             data-bs-interval="2000"
                         >
                             <img
-                                src={`http://localhost:3000/uploads/${loader.projects[2].image_key}`}
+                                src={`http://localhost:3000${loader.projects[2].image_key}`}
                                 className="w-100"
                                 style={{ height: '70vh', objectFit: 'cover' }}
                                 alt=""
