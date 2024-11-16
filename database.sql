@@ -16,6 +16,6 @@ CREATE TABLE projects(
     description VARCHAR(255),
     image_key VARCHAR(255),
     hidden BOOLEAN DEFAULT FALSE,
-    customer_link VARCHAR(255)
+    customer_link VARCHAR(255),
     PRIMARY KEY(id)
 )
