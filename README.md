@@ -12,12 +12,12 @@
 ## Startup:
 
     cd frontend/
-    npm i
+    npm install --force
     npm run dev
 
     cd ..
     cd backend/
-    npm i 
+    npm install --force
     npm start
 
     touch .env
