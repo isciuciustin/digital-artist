@@ -60,7 +60,9 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
         );
         await add_image_key.json();
         return redirect(
-            `/dashboard/modal/${params.id}?image_path=${form.get('image')}`
+            `/dashboard/modal/${params.id}?image_path=${
+                form.get('image')?.toString().split('/')[1]
+            }`
         );
     } catch (e) {
         return { error: e };
