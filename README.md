@@ -1,5 +1,7 @@
 # This is a simple CRUD app for a digital artist
 
+## Here is a demo video of the app: [Demo Video](https://youtu.be/lwDl8J4Fwt4)
+
 ## Requirements:
 
     MySQL Server - My version is : Ver 9.0.1 for macos14 on arm64 (MySQL Community Server - GPL)
